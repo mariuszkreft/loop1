@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Give.T - Persona to Inspiration Matcher</title>
+    <title>Give.T - Persona Matcher (Streaming Version)</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,6 +11,9 @@
         <header>
             <h1>Give.T Personalization Engine Demo</h1>
             <p class="subtitle">Matching personas with the right inspiration at the right time</p>
+            <div style="background: #e8f5e9; padding: 10px; border-radius: 8px; margin: 15px 0;">
+                <strong>✨ Streaming Mode:</strong> Watch the AI thinking process unfold character by character
+            </div>
         </header>
 
         <div class="control-panel">
@@ -38,6 +41,11 @@
             </div>
 
             <button id="matchBtn" class="match-btn">Find Perfect Inspiration</button>
+
+            <div id="thinkingSection" class="thinking-section" style="display: none;">
+                <h4>🤔 AI Thinking Process:</h4>
+                <div id="thinkingContent" class="thinking-content"></div>
+            </div>
         </div>
 
         <div class="results-section" id="resultsSection" style="display: none;">
@@ -64,6 +72,6 @@
 
     <script src="personas.js"></script>
     <script src="inspirations.js"></script>
-    <script src="app.js"></script>
+    <script src="app-with-streaming.js"></script>
 </body>
 </html>

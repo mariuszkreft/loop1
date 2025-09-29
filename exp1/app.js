@@ -5,12 +5,14 @@ let selectedState = null;
 // Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
     updatePersonaDisplay();
+    displayAllInspirations(); // Show all inspirations on load
 
     // Persona selector
     document.getElementById('personaSelect').addEventListener('change', (e) => {
         selectedPersona = e.target.value;
         updatePersonaDisplay();
         resetResults();
+        displayAllInspirations(); // Refresh display
     });
 
     // State buttons
@@ -20,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('active');
             selectedState = btn.dataset.state;
             document.getElementById('matchBtn').disabled = false;
+            // Update highlighting when state changes
+            updateStateHighlighting();
         });
     });
 
@@ -40,7 +44,18 @@ function updatePersonaDisplay() {
 }
 
 function resetResults() {
-    document.getElementById('resultsSection').style.display = 'none';
+    // Don't hide the section anymore, just clear selections
+    const items = document.querySelectorAll('.inspiration-item');
+    items.forEach(item => {
+        item.classList.remove('selected');
+        const matchScore = item.querySelector('.match-score');
+        if (matchScore) matchScore.remove();
+    });
+
+    // Clear the selected inspiration display
+    document.getElementById('selectedInspiration').innerHTML = '';
+    document.getElementById('inspirationType').textContent = '';
+    document.getElementById('reasoningContent').innerHTML = '<em>Select a state and click "Find Perfect Inspiration" to see matching logic</em>';
 }
 
 async function findMatch() {
@@ -146,9 +161,6 @@ function generateReasoning(persona, state, inspiration) {
 }
 
 function displayResults(match, allInspirations) {
-    // Show results section
-    document.getElementById('resultsSection').style.display = 'block';
-
     // Display selected inspiration
     const selectedDiv = document.getElementById('selectedInspiration');
     if (match.selected.type === 'quote') {
@@ -169,44 +181,91 @@ function displayResults(match, allInspirations) {
         </ul>
     `;
 
-    // Display all inspirations with highlighting
+    // Update highlighting to show selection
+    updateInspirationDisplay(allInspirations, match.selected.id);
+
+    // Smooth scroll to results
+    document.querySelector('.selected-inspiration').scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+}
+
+// New function to display all inspirations initially
+function displayAllInspirations() {
+    const allInspirations = [...inspirations.quotes, ...inspirations.songs];
+    const gridDiv = document.getElementById('inspirationGrid');
+
+    // Show the results section but with empty selection
+    document.getElementById('resultsSection').style.display = 'block';
+
+    // Clear previous content
+    gridDiv.innerHTML = '';
+
+    allInspirations.forEach(inspiration => {
+        const div = createInspirationElement(inspiration);
+        gridDiv.appendChild(div);
+    });
+}
+
+// New function to update highlighting based on state
+function updateStateHighlighting() {
+    const items = document.querySelectorAll('.inspiration-item');
+    items.forEach((item, index) => {
+        const allInspirations = [...inspirations.quotes, ...inspirations.songs];
+        const inspiration = allInspirations[index];
+
+        if (selectedState && inspiration.targetStates.includes(selectedState)) {
+            item.classList.add('highlighted');
+        } else {
+            item.classList.remove('highlighted');
+        }
+    });
+}
+
+// New function to update display with selection
+function updateInspirationDisplay(allInspirations, selectedId) {
     const gridDiv = document.getElementById('inspirationGrid');
     gridDiv.innerHTML = '';
 
     allInspirations.forEach(inspiration => {
-        const div = document.createElement('div');
-        div.className = 'inspiration-item';
+        const div = createInspirationElement(inspiration);
 
         // Highlight if it matches state
-        if (inspiration.targetStates.includes(selectedState)) {
+        if (selectedState && inspiration.targetStates.includes(selectedState)) {
             div.classList.add('highlighted');
         }
 
         // Mark as selected if it's the chosen one
-        if (inspiration.id === match.selected.id) {
+        if (inspiration.id === selectedId) {
             div.classList.add('selected');
-            div.innerHTML += '<span class="match-score">SELECTED</span>';
+            const matchBadge = document.createElement('span');
+            matchBadge.className = 'match-score';
+            matchBadge.textContent = 'SELECTED';
+            div.appendChild(matchBadge);
         }
-
-        // Add content
-        const text = inspiration.type === 'quote'
-            ? `"${inspiration.text}" — ${inspiration.author}`
-            : `🎵 ${inspiration.title} by ${inspiration.artist}`;
-
-        div.innerHTML += `
-            <div class="inspiration-text">${text}</div>
-            <div class="inspiration-meta">
-                <span>States: ${inspiration.targetStates.join(', ')}</span>
-                <span>Type: ${inspiration.type}</span>
-            </div>
-        `;
 
         gridDiv.appendChild(div);
     });
+}
 
-    // Smooth scroll to results
-    document.getElementById('resultsSection').scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-    });
+// Helper function to create inspiration element
+function createInspirationElement(inspiration) {
+    const div = document.createElement('div');
+    div.className = 'inspiration-item';
+
+    // Add content
+    const text = inspiration.type === 'quote'
+        ? `"${inspiration.text}" — ${inspiration.author}`
+        : `🎵 ${inspiration.title} by ${inspiration.artist}`;
+
+    div.innerHTML = `
+        <div class="inspiration-text">${text}</div>
+        <div class="inspiration-meta">
+            <span>States: ${inspiration.targetStates.join(', ')}</span>
+            <span>Type: ${inspiration.type}</span>
+        </div>
+    `;
+
+    return div;
 }

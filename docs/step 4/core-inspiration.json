@@ -1,0 +1,145 @@
+[
+  {
+    "intervention": "3-Minute Breathing Space",
+    "source": "MBSR",
+    "goal_outcome": ["reduce_stress", "recenter_attention"],
+    "user_fit": {
+      "values": ["balance", "mindfulness", "self-care"],
+      "learning_style": ["audio", "kinesthetic"],
+      "time": "micro",
+      "energy": "low"
+    },
+    "format": ["guided_audio", "micro_practice"],
+    "time_requirement": "3 min",
+    "energy_requirement": "very_low",
+    "evidence_base": "RCTs on MBSR (Kabat-Zinn, 1990+)"
+  },
+  {
+    "intervention": "Body Scan",
+    "source": "MBSR",
+    "goal_outcome": ["increase_body_awareness", "reduce_rumination"],
+    "user_fit": {
+      "values": ["self-care"],
+      "learning_style": ["audio"],
+      "time": "medium",
+      "energy": "medium"
+    },
+    "format": ["guided_audio"],
+    "time_requirement": "10–30 min",
+    "energy_requirement": "medium",
+    "evidence_base": "Strong clinical evidence"
+  },
+  {
+    "intervention": "Thought Record",
+    "source": "CBT",
+    "goal_outcome": ["reduce_negative_thinking", "increase_cognitive_awareness"],
+    "user_fit": {
+      "values": ["growth", "resilience"],
+      "learning_style": ["structured_writing"],
+      "energy": "medium"
+    },
+    "format": ["journaling_prompt", "worksheet"],
+    "time_requirement": "10–15 min",
+    "energy_requirement": "medium",
+    "evidence_base": "CBT gold standard"
+  },
+  {
+    "intervention": "Cognitive Reframe",
+    "source": "CBT",
+    "goal_outcome": ["shift_perspective", "increase_cognitive_flexibility"],
+    "user_fit": {
+      "values": ["achievement", "balance"],
+      "learning_style": ["reflection"],
+      "energy": "low"
+    },
+    "format": ["text_prompt", "micro_exercise"],
+    "time_requirement": "5 min",
+    "energy_requirement": "low",
+    "evidence_base": "High (CBT RCTs)"
+  },
+  {
+    "intervention": "Values Clarification",
+    "source": "ACT",
+    "goal_outcome": ["clarify_priorities", "increase_meaning_alignment"],
+    "user_fit": {
+      "values": ["meaning", "purpose"],
+      "learning_style": ["writing", "reflection"],
+      "energy": "medium"
+    },
+    "format": ["journaling_prompt", "reflection_task"],
+    "time_requirement": "10–15 min",
+    "energy_requirement": "medium",
+    "evidence_base": "Empirical support (ACT studies)"
+  },
+  {
+    "intervention": "Leaves on a Stream",
+    "source": "ACT",
+    "goal_outcome": ["reduce_entanglement_with_thoughts", "increase_mindfulness"],
+    "user_fit": {
+      "values": ["calm", "balance"],
+      "learning_style": ["audio", "visualization"],
+      "energy": "low"
+    },
+    "format": ["guided_audio"],
+    "time_requirement": "5–10 min",
+    "energy_requirement": "low",
+    "evidence_base": "ACT evidence base"
+  },
+  {
+    "intervention": "Best Possible Self",
+    "source": "Positive Psychology",
+    "goal_outcome": ["boost_optimism", "increase_future_orientation"],
+    "user_fit": {
+      "values": ["growth", "hope", "creativity"],
+      "learning_style": ["writing", "visualization"],
+      "energy": "high"
+    },
+    "format": ["journaling_exercise"],
+    "time_requirement": "15–20 min",
+    "energy_requirement": "high",
+    "evidence_base": "Multiple RCTs"
+  },
+  {
+    "intervention": "Gratitude Letter",
+    "source": "Positive Psychology",
+    "goal_outcome": ["increase_positive_affect", "deepen_social_connection"],
+    "user_fit": {
+      "values": ["connection", "kindness"],
+      "learning_style": ["writing"],
+      "energy": "medium",
+      "social_sharing": "optional"
+    },
+    "format": ["journaling_prompt", "letter"],
+    "time_requirement": "15 min",
+    "energy_requirement": "medium",
+    "evidence_base": "Robust RCT evidence"
+  },
+  {
+    "intervention": "Scaling Questions",
+    "source": "Motivational Interviewing",
+    "goal_outcome": ["enhance_self_efficacy", "increase_readiness_to_act"],
+    "user_fit": {
+      "values": ["growth", "agency"],
+      "learning_style": ["reflection"],
+      "energy": "very_low"
+    },
+    "format": ["text_prompt", "scale_question"],
+    "time_requirement": "2–5 min",
+    "energy_requirement": "very_low",
+    "evidence_base": "Strong MI evidence"
+  },
+  {
+    "intervention": "Decisional Balance",
+    "source": "Motivational Interviewing",
+    "goal_outcome": ["clarify_pros_and_cons", "support_commitment_to_change"],
+    "user_fit": {
+      "values": ["autonomy", "clarity", "family"],
+      "learning_style": ["structured_writing"],
+      "energy": "medium"
+    },
+    "format": ["journaling_prompt", "worksheet"],
+    "time_requirement": "10–15 min",
+    "energy_requirement": "medium",
+    "evidence_base": "MI gold standard"
+  }
+]
