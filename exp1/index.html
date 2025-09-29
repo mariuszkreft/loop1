@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Give.T - Persona to Inspiration Matcher</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Give.T Personalization Engine Demo</h1>
+            <p class="subtitle">Matching personas with the right inspiration at the right time</p>
+        </header>
+
+        <div class="control-panel">
+            <div class="persona-selector">
+                <h3>Select Persona</h3>
+                <select id="personaSelect">
+                    <option value="elara">Elara - The Harmonizer (Working Mom)</option>
+                    <option value="sarah">Sarah - The Achiever (Career-focused)</option>
+                    <option value="maria">Maria - The Nurturer (Stay-at-home Mom)</option>
+                </select>
+                <div id="personaSummary" class="persona-summary"></div>
+            </div>
+
+            <div class="state-selector">
+                <h3>Current State</h3>
+                <div class="state-buttons">
+                    <button class="state-btn" data-state="overwhelmed">😰 Overwhelmed</button>
+                    <button class="state-btn" data-state="anxious">😟 Anxious</button>
+                    <button class="state-btn" data-state="sad">😢 Sad</button>
+                    <button class="state-btn" data-state="lonely">😔 Lonely</button>
+                    <button class="state-btn" data-state="happy">😊 Happy</button>
+                    <button class="state-btn" data-state="inspired">✨ Inspired</button>
+                    <button class="state-btn" data-state="disempowered">😞 Disempowered</button>
+                </div>
+            </div>
+
+            <button id="matchBtn" class="match-btn">Find Perfect Inspiration</button>
+        </div>
+
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <h2>Matched Inspiration</h2>
+
+            <div class="selected-inspiration">
+                <div class="inspiration-content" id="selectedInspiration"></div>
+                <div class="inspiration-type" id="inspirationType"></div>
+            </div>
+
+            <div class="reasoning-section">
+                <h3>Why This Match?</h3>
+                <div id="reasoningContent" class="reasoning-content"></div>
+            </div>
+
+            <div class="all-inspirations">
+                <h3>All Available Inspirations</h3>
+                <div class="inspiration-grid" id="inspirationGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="personas.js"></script>
+    <script src="inspirations.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

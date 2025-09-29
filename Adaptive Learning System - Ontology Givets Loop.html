@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)https://vpcbvpnd.gensparkspace.com/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptive Learning System - Ontology Givets Loop</title>
+    <link href="./Adaptive Learning System - Ontology Givets Loop_files/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Adaptive Learning System - Ontology Givets Loop_files/all.min.css">
+    <script src="./Adaptive Learning System - Ontology Givets Loop_files/chart.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .user-ontology-bg {
+            background: linear-gradient(135deg, #74b9ff 0%, #6c5ce7 100%);
+        }
+        .givets-db-bg {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+        }
+        .interaction-hub-bg {
+            background: linear-gradient(135deg, #00cec9 0%, #55a3ff 100%);
+        }
+        .learning-loop {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+<style>
+    .genspark-notice-dialog {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 10001;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .genspark-notice-content {
+      background-color: white;
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      box-sizing: border-box;
+      padding: 10px 30px 30px 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      font-size: 16px;
+    }
+
+    .genspark-notice-title {
+      color: #000;
+      font-family: Arial;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 150%; 
+    }
+
+    .genspark-notice-list {
+      margin: 24px 0;
+      
+      color: #606366;
+      font-family: Arial;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 150%;
+      padding-left: 12px;
+    }
+
+    .genspark-notice-list li {
+      margin-bottom: 12px;
+      list-style-type: disc;
+    }
+
+    .genspark-notice-list li a {
+      color: #606366;
+      text-decoration: underline;
+    }
+
+    .genspark-notice-checkbox {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      gap: 10px;
+
+      color: #232425;
+
+      font-family: Arial;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    .genspark-notice-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+      
+    .genspark-notice-ok {
+      color: #232425;
+
+      text-align: center;
+      font-family: Arial;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 150%; 
+
+      cursor: pointer;
+      display: flex;
+      height: 40px;
+      padding: 6px 14px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      align-self: stretch;
+      border-radius: 8px;
+      border: 1px solid #000;
+      box-sizing: border-box;
+      width: 100%;
+    }
+  </style></head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-brain mr-2"></i>
+                Adaptive Learning System
+            </h1>
+            <div class="flex items-center space-x-4">
+                <div class="text-sm">
+                    <span class="bg-white bg-opacity-20 px-2 py-1 rounded">
+                        Learning Score: <span id="learningScore">100</span>%
+                    </span>
+                </div>
+                <button id="resetBtn" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm">
+                    <i class="fas fa-refresh mr-1"></i>Reset
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-4">
+        <!-- System Overview -->
+        <div class="mb-8 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-4 text-center">Ontology ↔ Givets Feedback Loop</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="user-ontology-bg text-white p-4 rounded-lg text-center">
+                    <i class="fas fa-user-cog text-3xl mb-2"></i>
+                    <h3 class="font-bold">User Ontology</h3>
+                    <p class="text-sm">Understanding &amp; Profiling</p>
+                </div>
+                <div class="interaction-hub-bg text-white p-4 rounded-lg text-center learning-loop">
+                    <i class="fas fa-sync-alt text-3xl mb-2"></i>
+                    <h3 class="font-bold">Learning Loop</h3>
+                    <p class="text-sm">Continuous Adaptation</p>
+                </div>
+                <div class="givets-db-bg text-white p-4 rounded-lg text-center">
+                    <i class="fas fa-database text-3xl mb-2"></i>
+                    <h3 class="font-bold">Givets Database</h3>
+                    <p class="text-sm">Interventions &amp; Tracking</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="mb-6">
+            <div class="flex flex-wrap justify-center space-x-2 bg-white rounded-lg shadow p-2">
+                <button class="nav-tab px-4 py-2 rounded bg-gray-200 text-gray-700" data-tab="initial-questions">
+                    <i class="fas fa-question-circle mr-1"></i>Initial Questions
+                </button>
+                <button class="nav-tab px-4 py-2 rounded hover:bg-gray-300 active bg-blue-500 text-white" data-tab="persona-building">
+                    <i class="fas fa-user-friends mr-1"></i>Persona Building
+                </button>
+                <button class="nav-tab px-4 py-2 rounded hover:bg-gray-300 bg-gray-200 text-gray-700" data-tab="interventions">
+                    <i class="fas fa-lightbulb mr-1"></i>Interventions
+                </button>
+                <button class="nav-tab px-4 py-2 rounded hover:bg-gray-300 bg-gray-200 text-gray-700" data-tab="tracking">
+                    <i class="fas fa-chart-line mr-1"></i>Tracking
+                </button>
+                <button class="nav-tab px-4 py-2 rounded hover:bg-gray-300 bg-gray-200 text-gray-700" data-tab="analytics">
+                    <i class="fas fa-analytics mr-1"></i>Analytics
+                </button>
+            </div>
+        </div>
+
+        <!-- Tab Contents -->
+        
+        <!-- Initial Questions Tab -->
+        <div id="initial-questions" class="tab-content fade-in hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-center user-ontology-bg text-white p-4 rounded-lg">
+                    <i class="fas fa-clipboard-question mr-2"></i>
+                    Initial User Profiling
+                </h2>
+                
+                <div class="mb-4">
+                    <div class="bg-gray-200 rounded-full h-2">
+                        <div id="questionProgress" class="bg-blue-500 h-2 rounded-full progress-bar" style="width: 100%;"></div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-1">Question <span id="currentQuestion">10</span> of <span id="totalQuestions">10</span></p>
+                </div>
+
+                <div id="questionContainer" class="space-y-6">
+                <div class="text-center p-8">
+                    <div class="text-6xl text-green-500 mb-4">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-green-600 mb-2">Profile Complete!</h3>
+                    <p class="text-gray-600 mb-4">Your responses have been analyzed. Let's build your personas!</p>
+                    <button onclick="switchTab(&#39;persona-building&#39;)" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">
+                        View Persona Analysis <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+                <div class="flex justify-between mt-6">
+                    <button id="prevQuestion" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 disabled:opacity-50">
+                        <i class="fas fa-arrow-left mr-1"></i>Previous
+                    </button>
+                    <button id="nextQuestion" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Complete Profile<i class="fas fa-check ml-1"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Persona Building Tab -->
+        <div id="persona-building" class="tab-content fade-in">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-center user-ontology-bg text-white p-4 rounded-lg">
+                    <i class="fas fa-robot mr-2"></i>
+                    AI Persona Building
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Pattern Recognition Analysis</h3>
+                        <div id="patternAnalysis" class="space-y-3">
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-semibold text-blue-800">Motivation Pattern</h4>
+                        <span class="text-sm text-blue-600">80% confidence</span>
+                    </div>
+                    <p class="text-blue-700 text-sm">Primarily driven by social impact</p>
+                    <div class="mt-2 bg-blue-200 rounded-full h-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 80%"></div>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Generated Personas</h3>
+                        <div id="personaCards" class="space-y-3">
+                <div class="persona-card bg-gradient-to-r from-green-400 to-blue-500 text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-lg">The Analyst</h4>
+                        <div class="text-right">
+                            <div class="text-sm opacity-80">Match</div>
+                            <div class="text-xl font-bold">65%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-3">Methodical, detail-oriented, values deep understanding</p>
+                    <div class="text-xs">
+                        <div class="mb-1">Strengths: Analytical thinking, Thorough, Strategic</div>
+                        <div>Best interventions: Detailed explanations, Data insights, Systematic approaches</div>
+                    </div>
+                    <div class="mt-2 text-xs bg-white bg-opacity-20 px-2 py-1 rounded">Primary Persona</div>
+                </div>
+            
+                <div class="persona-card bg-gradient-to-r from-gray-300 to-gray-400 text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-lg">The Achiever</h4>
+                        <div class="text-right">
+                            <div class="text-sm opacity-80">Match</div>
+                            <div class="text-xl font-bold">50%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-3">Goal-oriented, results-driven, seeks measurable progress</p>
+                    <div class="text-xs">
+                        <div class="mb-1">Strengths: High motivation, Clear objectives, Persistent</div>
+                        <div>Best interventions: Goal tracking, Progress metrics, Achievement badges</div>
+                    </div>
+                    
+                </div>
+            
+                <div class="persona-card bg-gradient-to-r from-gray-300 to-gray-400 text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-lg">The Explorer</h4>
+                        <div class="text-right">
+                            <div class="text-sm opacity-80">Match</div>
+                            <div class="text-xl font-bold">50%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-3">Curious, adaptable, enjoys discovering new approaches</p>
+                    <div class="text-xs">
+                        <div class="mb-1">Strengths: Open-minded, Creative, Flexible</div>
+                        <div>Best interventions: Varied content, Exploration challenges, Discovery rewards</div>
+                    </div>
+                    
+                </div>
+            
+                <div class="persona-card bg-gradient-to-r from-gray-300 to-gray-400 text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-lg">The Collaborator</h4>
+                        <div class="text-right">
+                            <div class="text-sm opacity-80">Match</div>
+                            <div class="text-xl font-bold">50%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-3">Social, supportive, learns best through interaction</p>
+                    <div class="text-xs">
+                        <div class="mb-1">Strengths: Team player, Empathetic, Communication skills</div>
+                        <div>Best interventions: Group activities, Peer feedback, Social challenges</div>
+                    </div>
+                    
+                </div>
+            </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Deep User Understanding</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <canvas id="personaChart" style="height: 300px; display: block; box-sizing: border-box; width: 1424px;" width="1424" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interventions Tab -->
+        <div id="interventions" class="tab-content fade-in hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-center givets-db-bg text-white p-4 rounded-lg">
+                    <i class="fas fa-magic mr-2"></i>
+                    Personalized Interventions
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Matching Algorithm</h3>
+                        <div id="matchingProcess" class="space-y-3">
+                    <div class="text-center p-8 text-gray-500">
+                        <i class="fas fa-info-circle text-4xl mb-4"></i>
+                        <p>Complete persona building to see interventions</p>
+                    </div>
+                </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Recommended Givets</h3>
+                        <div id="recommendedGivets" class="space-y-3">
+                <div class="givet-card bg-gradient-to-r from-pink-400 to-red-500 text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold">Social Accountability</h4>
+                        <div class="text-right">
+                            <div class="text-xs opacity-80">Match</div>
+                            <div class="font-bold">95%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-2">Partner with others for mutual support</p>
+                    <div class="flex justify-between text-xs">
+                        <span>Social</span>
+                        <span>Variable</span>
+                        <span>87% effective</span>
+                    </div>
+                    <div class="mt-2 text-xs bg-white bg-opacity-20 px-2 py-1 rounded">Recommended</div>
+                </div>
+            
+                <div class="givet-card bg-gradient-to-r from-gray-300 to-gray-400 text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold">Learning Challenges</h4>
+                        <div class="text-right">
+                            <div class="text-xs opacity-80">Match</div>
+                            <div class="font-bold">80%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-2">Bite-sized skill-building activities</p>
+                    <div class="flex justify-between text-xs">
+                        <span>Development</span>
+                        <span>15 mins</span>
+                        <span>91% effective</span>
+                    </div>
+                    
+                </div>
+            
+                <div class="givet-card bg-gradient-to-r from-gray-300 to-gray-400 text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold">Mindful Breathing</h4>
+                        <div class="text-right">
+                            <div class="text-xs opacity-80">Match</div>
+                            <div class="font-bold">75%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-2">Guided breathing exercises for focus</p>
+                    <div class="flex justify-between text-xs">
+                        <span>Wellness</span>
+                        <span>10 mins</span>
+                        <span>89% effective</span>
+                    </div>
+                    
+                </div>
+            
+                <div class="givet-card bg-gradient-to-r from-gray-300 to-gray-400 text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold">Daily Goal Tracker</h4>
+                        <div class="text-right">
+                            <div class="text-xs opacity-80">Match</div>
+                            <div class="font-bold">70%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-2">Track and visualize your daily progress</p>
+                    <div class="flex justify-between text-xs">
+                        <span>Productivity</span>
+                        <span>5 mins/day</span>
+                        <span>94% effective</span>
+                    </div>
+                    
+                </div>
+            </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Intervention Delivery</h3>
+                    <div id="interventionDelivery" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-gradient-to-br from-purple-400 to-pink-400 text-white p-4 rounded-lg text-center">
+                    <i class="fas fa-mobile-alt text-3xl mb-2"></i>
+                    <h4 class="font-bold">Mobile Push</h4>
+                    <p class="text-sm opacity-90">Daily reminders</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-400 to-purple-400 text-white p-4 rounded-lg text-center">
+                    <i class="fas fa-envelope text-3xl mb-2"></i>
+                    <h4 class="font-bold">Email Digest</h4>
+                    <p class="text-sm opacity-90">Weekly summaries</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-400 to-blue-400 text-white p-4 rounded-lg text-center">
+                    <i class="fas fa-gamepad text-3xl mb-2"></i>
+                    <h4 class="font-bold">Gamified</h4>
+                    <p class="text-sm opacity-90">Points &amp; badges</p>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracking Tab -->
+        <div id="tracking" class="tab-content fade-in hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-center givets-db-bg text-white p-4 rounded-lg">
+                    <i class="fas fa-chart-line mr-2"></i>
+                    Progress Tracking &amp; Feedback
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Effectiveness Metrics</h3>
+                        <canvas id="effectivenessChart" style="height: 10024px; display: block; box-sizing: border-box; width: 716px;" width="716" height="10024"></canvas>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">User Engagement</h3>
+                        <canvas id="engagementChart" style="height: 10024px; display: block; box-sizing: border-box; width: 716px;" width="716" height="10024"></canvas>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Feedback Collection</h3>
+                    <div id="feedbackForm" class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold mb-4">Rate Your Recent Interventions</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">How effective was the Daily Goal Tracker?</label>
+                        <div class="flex space-x-2">
+                            
+                                <button class="rating-btn w-8 h-8 rounded-full border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-100" data-rating="1">
+                                    1
+                                </button>
+                            
+                                <button class="rating-btn w-8 h-8 rounded-full border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-100" data-rating="2">
+                                    2
+                                </button>
+                            
+                                <button class="rating-btn w-8 h-8 rounded-full border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-100" data-rating="3">
+                                    3
+                                </button>
+                            
+                                <button class="rating-btn w-8 h-8 rounded-full border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-100" data-rating="4">
+                                    4
+                                </button>
+                            
+                                <button class="rating-btn w-8 h-8 rounded-full border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-100" data-rating="5">
+                                    5
+                                </button>
+                            
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">What would improve your experience?</label>
+                        <textarea class="w-full p-2 border rounded-lg" rows="3" placeholder="Your feedback helps us improve..."></textarea>
+                    </div>
+                    
+                    <button class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600" onclick="submitFeedback()">
+                        Submit Feedback
+                    </button>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics" class="tab-content fade-in hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-center interaction-hub-bg text-white p-4 rounded-lg">
+                    <i class="fas fa-brain mr-2"></i>
+                    Learning Analytics Dashboard
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-2">System Learning Rate</h3>
+                        <div class="text-3xl font-bold" id="systemLearningRate">100%</div>
+                        <p class="text-sm opacity-80">Continuous improvement</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-pink-500 to-red-600 text-white p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-2">Intervention Success</h3>
+                        <div class="text-3xl font-bold" id="interventionSuccess">86%</div>
+                        <p class="text-sm opacity-80">User satisfaction</p>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Continuous Learning Loop Visualization</h3>
+                    <canvas id="learningLoopChart" style="height: 16724px; display: block; box-sizing: border-box; width: 1456px;" width="1456" height="16724"></canvas>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Predictive Insights</h3>
+                        <div id="predictiveInsights" class="space-y-3">
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-blue-800">User likely to prefer morning interventions</p>
+                        <span class="text-xs text-blue-600 font-semibold">87%</span>
+                    </div>
+                </div>
+            
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-blue-800">Visual learning content shows 23% higher engagement</p>
+                        <span class="text-xs text-blue-600 font-semibold">92%</span>
+                    </div>
+                </div>
+            
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-blue-800">Goal-tracking interventions expected to have 95% success rate</p>
+                        <span class="text-xs text-blue-600 font-semibold">79%</span>
+                    </div>
+                </div>
+            
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-blue-800">Social features may increase retention by 34%</p>
+                        <span class="text-xs text-blue-600 font-semibold">68%</span>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">System Improvements</h3>
+                        <div id="systemImprovements" class="space-y-3">
+                <div class="bg-green-50 border-l-4 border-green-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-green-800">Added persona refinement algorithm</p>
+                        <span class="text-xs text-green-600 font-semibold">+12% accuracy</span>
+                    </div>
+                </div>
+            
+                <div class="bg-green-50 border-l-4 border-green-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-green-800">Enhanced matching for visual learners</p>
+                        <span class="text-xs text-green-600 font-semibold">+8% engagement</span>
+                    </div>
+                </div>
+            
+                <div class="bg-green-50 border-l-4 border-green-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-green-800">Optimized feedback collection timing</p>
+                        <span class="text-xs text-green-600 font-semibold">+15% response rate</span>
+                    </div>
+                </div>
+            
+                <div class="bg-green-50 border-l-4 border-green-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-green-800">Improved intervention personalization</p>
+                        <span class="text-xs text-green-600 font-semibold">+9% effectiveness</span>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p class="mb-2">
+                <strong>Key Principle:</strong> The more we understand the user, the better our interventions. 
+                The more interventions we test, the deeper our understanding becomes.
+            </p>
+            <p class="text-sm text-gray-400">
+                Adaptive Learning System - Continuous Improvement Through Feedback
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // System state
+        let systemState = {
+            currentQuestionIndex: 0,
+            userResponses: {},
+            personas: [],
+            interventions: [],
+            learningScore: 0,
+            feedbackData: {}
+        };
+
+        // Questions for initial profiling
+        const questions = [
+            {
+                id: 'values',
+                question: 'What values are most important to you in life?',
+                type: 'multiple',
+                options: ['Personal Growth', 'Relationships', 'Achievement', 'Security', 'Adventure', 'Creativity']
+            },
+            {
+                id: 'goals',
+                question: 'What are your primary goals for the next year?',
+                type: 'multiple',
+                options: ['Career Advancement', 'Health Improvement', 'Skill Development', 'Financial Growth', 'Social Connection', 'Mental Wellness']
+            },
+            {
+                id: 'lifestyle',
+                question: 'How would you describe your current lifestyle?',
+                type: 'single',
+                options: ['Very Active', 'Moderately Active', 'Sedentary', 'Mixed/Variable']
+            },
+            {
+                id: 'learning_style',
+                question: 'How do you prefer to learn new things?',
+                type: 'multiple',
+                options: ['Visual/Reading', 'Audio/Listening', 'Hands-on Practice', 'Group Discussion', 'Self-reflection', 'Trial and Error']
+            },
+            {
+                id: 'motivation',
+                question: 'What motivates you most?',
+                type: 'single',
+                options: ['External Recognition', 'Internal Satisfaction', 'Social Impact', 'Personal Challenge']
+            },
+            {
+                id: 'stress_response',
+                question: 'How do you typically respond to stress?',
+                type: 'multiple',
+                options: ['Problem-solving', 'Seeking Support', 'Physical Activity', 'Mindfulness/Meditation', 'Avoidance', 'Creative Expression']
+            },
+            {
+                id: 'time_preference',
+                question: 'When are you most productive?',
+                type: 'single',
+                options: ['Early Morning', 'Mid-Morning', 'Afternoon', 'Evening', 'Late Night']
+            },
+            {
+                id: 'social_preference',
+                question: 'Do you prefer working/learning alone or with others?',
+                type: 'single',
+                options: ['Strongly Prefer Alone', 'Somewhat Prefer Alone', 'No Preference', 'Somewhat Prefer Groups', 'Strongly Prefer Groups']
+            },
+            {
+                id: 'challenge_level',
+                question: 'What level of challenge do you prefer?',
+                type: 'single',
+                options: ['Low - Comfortable and Easy', 'Medium - Moderate Challenge', 'High - Difficult and Demanding', 'Variable - Depends on Mood']
+            },
+            {
+                id: 'feedback_preference',
+                question: 'How do you prefer to receive feedback?',
+                type: 'multiple',
+                options: ['Immediate', 'Delayed/Reflective', 'Detailed Analytics', 'Simple Progress Indicators', 'Peer Comparison', 'Personal Milestones']
+            }
+        ];
+
+        // Initialize the system
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSystem();
+            setupEventListeners();
+            displayCurrentQuestion();
+        });
+
+        function initializeSystem() {
+            // Load any saved state
+            const savedState = localStorage.getItem('adaptiveLearningState');
+            if (savedState) {
+                systemState = {...systemState, ...JSON.parse(savedState)};
+            }
+            updateLearningScore();
+        }
+
+        function setupEventListeners() {
+            // Tab navigation
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+
+            // Question navigation
+            document.getElementById('nextQuestion').addEventListener('click', nextQuestion);
+            document.getElementById('prevQuestion').addEventListener('click', prevQuestion);
+            
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', resetSystem);
+        }
+
+        function switchTab(tabId) {
+            // Update tab buttons
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active', 'bg-blue-500', 'text-white');
+                tab.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active', 'bg-blue-500', 'text-white');
+            document.querySelector(`[data-tab="${tabId}"]`).classList.remove('bg-gray-200', 'text-gray-700');
+
+            // Show/hide content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('fade-in');
+
+            // Initialize tab-specific content
+            switch(tabId) {
+                case 'persona-building':
+                    buildPersonas();
+                    break;
+                case 'interventions':
+                    generateInterventions();
+                    break;
+                case 'tracking':
+                    initializeTracking();
+                    break;
+                case 'analytics':
+                    initializeAnalytics();
+                    break;
+            }
+        }
+
+        function displayCurrentQuestion() {
+            const question = questions[systemState.currentQuestionIndex];
+            const container = document.getElementById('questionContainer');
+            
+            container.innerHTML = `
+                <div class="question-card bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">${question.question}</h3>
+                    <div id="questionOptions" class="space-y-2">
+                        ${question.options.map((option, index) => `
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-blue-50 cursor-pointer transition-colors">
+                                <input type="${question.type === 'single' ? 'radio' : 'checkbox'}" 
+                                       name="question_${question.id}" 
+                                       value="${option}"
+                                       class="mr-3 ${question.type === 'single' ? 'text-blue-600' : 'text-blue-600'}"
+                                       ${systemState.userResponses[question.id] && systemState.userResponses[question.id].includes(option) ? 'checked' : ''}>
+                                <span class="text-gray-700">${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            updateQuestionProgress();
+            updateNavigationButtons();
+        }
+
+        function updateQuestionProgress() {
+            const progress = ((systemState.currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('questionProgress').style.width = `${progress}%`;
+            document.getElementById('currentQuestion').textContent = systemState.currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = questions.length;
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevQuestion');
+            const nextBtn = document.getElementById('nextQuestion');
+            
+            prevBtn.disabled = systemState.currentQuestionIndex === 0;
+            nextBtn.textContent = systemState.currentQuestionIndex === questions.length - 1 ? 
+                'Complete Profile' : 'Next';
+            nextBtn.innerHTML = systemState.currentQuestionIndex === questions.length - 1 ? 
+                'Complete Profile<i class="fas fa-check ml-1"></i>' : 
+                'Next<i class="fas fa-arrow-right ml-1"></i>';
+        }
+
+        function nextQuestion() {
+            saveCurrentResponse();
+            
+            if (systemState.currentQuestionIndex < questions.length - 1) {
+                systemState.currentQuestionIndex++;
+                displayCurrentQuestion();
+            } else {
+                completeInitialProfiling();
+            }
+            
+            saveSystemState();
+        }
+
+        function prevQuestion() {
+            if (systemState.currentQuestionIndex > 0) {
+                systemState.currentQuestionIndex--;
+                displayCurrentQuestion();
+            }
+        }
+
+        function saveCurrentResponse() {
+            const question = questions[systemState.currentQuestionIndex];
+            const inputs = document.querySelectorAll(`input[name="question_${question.id}"]:checked`);
+            const responses = Array.from(inputs).map(input => input.value);
+            
+            if (responses.length > 0) {
+                systemState.userResponses[question.id] = responses;
+                systemState.learningScore = Math.min(100, systemState.learningScore + 10);
+                updateLearningScore();
+            }
+        }
+
+        function completeInitialProfiling() {
+            systemState.learningScore = Math.min(100, systemState.learningScore + 20);
+            updateLearningScore();
+            
+            // Show completion message
+            const container = document.getElementById('questionContainer');
+            container.innerHTML = `
+                <div class="text-center p-8">
+                    <div class="text-6xl text-green-500 mb-4">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-green-600 mb-2">Profile Complete!</h3>
+                    <p class="text-gray-600 mb-4">Your responses have been analyzed. Let's build your personas!</p>
+                    <button onclick="switchTab('persona-building')" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">
+                        View Persona Analysis <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            `;
+            
+            saveSystemState();
+        }
+
+        function buildPersonas() {
+            if (Object.keys(systemState.userResponses).length === 0) {
+                document.getElementById('patternAnalysis').innerHTML = `
+                    <div class="text-center p-8 text-gray-500">
+                        <i class="fas fa-info-circle text-4xl mb-4"></i>
+                        <p>Complete the initial questions to see persona analysis</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Simulate pattern analysis
+            const patterns = analyzePatterns();
+            displayPatternAnalysis(patterns);
+            
+            // Generate personas
+            const personas = generatePersonas(patterns);
+            displayPersonaCards(personas);
+            
+            // Create persona chart
+            createPersonaChart(personas);
+            
+            systemState.personas = personas;
+            systemState.learningScore = Math.min(100, systemState.learningScore + 15);
+            updateLearningScore();
+            saveSystemState();
+        }
+
+        function analyzePatterns() {
+            const responses = systemState.userResponses;
+            const patterns = [];
+
+            // Analyze learning style
+            if (responses.learning_style) {
+                if (responses.learning_style.includes('Visual/Reading')) {
+                    patterns.push({ type: 'Visual Learner', confidence: 85, description: 'Prefers visual and reading-based content' });
+                }
+                if (responses.learning_style.includes('Hands-on Practice')) {
+                    patterns.push({ type: 'Kinesthetic Learner', confidence: 90, description: 'Learns best through practical application' });
+                }
+            }
+
+            // Analyze motivation
+            if (responses.motivation) {
+                const motivation = responses.motivation[0];
+                patterns.push({ 
+                    type: 'Motivation Pattern', 
+                    confidence: 80, 
+                    description: `Primarily driven by ${motivation.toLowerCase()}` 
+                });
+            }
+
+            // Analyze social preference
+            if (responses.social_preference) {
+                const social = responses.social_preference[0];
+                if (social.includes('Alone')) {
+                    patterns.push({ type: 'Independent Worker', confidence: 75, description: 'Prefers solo activities and self-directed learning' });
+                } else if (social.includes('Groups')) {
+                    patterns.push({ type: 'Collaborative Learner', confidence: 75, description: 'Thrives in group settings and social learning' });
+                }
+            }
+
+            return patterns;
+        }
+
+        function displayPatternAnalysis(patterns) {
+            const container = document.getElementById('patternAnalysis');
+            container.innerHTML = patterns.map(pattern => `
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-semibold text-blue-800">${pattern.type}</h4>
+                        <span class="text-sm text-blue-600">${pattern.confidence}% confidence</span>
+                    </div>
+                    <p class="text-blue-700 text-sm">${pattern.description}</p>
+                    <div class="mt-2 bg-blue-200 rounded-full h-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: ${pattern.confidence}%"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function generatePersonas(patterns) {
+            const personas = [
+                {
+                    name: 'The Achiever',
+                    description: 'Goal-oriented, results-driven, seeks measurable progress',
+                    strengths: ['High motivation', 'Clear objectives', 'Persistent'],
+                    interventions: ['Goal tracking', 'Progress metrics', 'Achievement badges'],
+                    match: calculatePersonaMatch('achiever', systemState.userResponses)
+                },
+                {
+                    name: 'The Explorer',
+                    description: 'Curious, adaptable, enjoys discovering new approaches',
+                    strengths: ['Open-minded', 'Creative', 'Flexible'],
+                    interventions: ['Varied content', 'Exploration challenges', 'Discovery rewards'],
+                    match: calculatePersonaMatch('explorer', systemState.userResponses)
+                },
+                {
+                    name: 'The Collaborator',
+                    description: 'Social, supportive, learns best through interaction',
+                    strengths: ['Team player', 'Empathetic', 'Communication skills'],
+                    interventions: ['Group activities', 'Peer feedback', 'Social challenges'],
+                    match: calculatePersonaMatch('collaborator', systemState.userResponses)
+                },
+                {
+                    name: 'The Analyst',
+                    description: 'Methodical, detail-oriented, values deep understanding',
+                    strengths: ['Analytical thinking', 'Thorough', 'Strategic'],
+                    interventions: ['Detailed explanations', 'Data insights', 'Systematic approaches'],
+                    match: calculatePersonaMatch('analyst', systemState.userResponses)
+                }
+            ];
+
+            return personas.sort((a, b) => b.match - a.match);
+        }
+
+        function calculatePersonaMatch(personaType, responses) {
+            let match = 50; // Base match
+
+            switch(personaType) {
+                case 'achiever':
+                    if (responses.values && responses.values.includes('Achievement')) match += 20;
+                    if (responses.goals && responses.goals.includes('Career Advancement')) match += 15;
+                    if (responses.motivation && responses.motivation.includes('External Recognition')) match += 10;
+                    break;
+                case 'explorer':
+                    if (responses.values && responses.values.includes('Adventure')) match += 20;
+                    if (responses.values && responses.values.includes('Creativity')) match += 15;
+                    if (responses.challenge_level && responses.challenge_level.includes('Variable')) match += 10;
+                    break;
+                case 'collaborator':
+                    if (responses.values && responses.values.includes('Relationships')) match += 20;
+                    if (responses.social_preference && responses.social_preference[0].includes('Groups')) match += 15;
+                    if (responses.learning_style && responses.learning_style.includes('Group Discussion')) match += 10;
+                    break;
+                case 'analyst':
+                    if (responses.learning_style && responses.learning_style.includes('Self-reflection')) match += 15;
+                    if (responses.feedback_preference && responses.feedback_preference.includes('Detailed Analytics')) match += 20;
+                    if (responses.challenge_level && responses.challenge_level.includes('High')) match += 10;
+                    break;
+            }
+
+            return Math.min(100, match);
+        }
+
+        function displayPersonaCards(personas) {
+            const container = document.getElementById('personaCards');
+            container.innerHTML = personas.map((persona, index) => `
+                <div class="persona-card bg-gradient-to-r ${index === 0 ? 'from-green-400 to-blue-500' : 'from-gray-300 to-gray-400'} text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-lg">${persona.name}</h4>
+                        <div class="text-right">
+                            <div class="text-sm opacity-80">Match</div>
+                            <div class="text-xl font-bold">${persona.match}%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-3">${persona.description}</p>
+                    <div class="text-xs">
+                        <div class="mb-1">Strengths: ${persona.strengths.join(', ')}</div>
+                        <div>Best interventions: ${persona.interventions.join(', ')}</div>
+                    </div>
+                    ${index === 0 ? '<div class="mt-2 text-xs bg-white bg-opacity-20 px-2 py-1 rounded">Primary Persona</div>' : ''}
+                </div>
+            `).join('');
+        }
+
+        function createPersonaChart(personas) {
+            const ctx = document.getElementById('personaChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: personas.map(p => p.name),
+                    datasets: [{
+                        label: 'Persona Match %',
+                        data: personas.map(p => p.match),
+                        backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                        borderColor: 'rgba(74, 144, 226, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function generateInterventions() {
+            if (systemState.personas.length === 0) {
+                document.getElementById('matchingProcess').innerHTML = `
+                    <div class="text-center p-8 text-gray-500">
+                        <i class="fas fa-info-circle text-4xl mb-4"></i>
+                        <p>Complete persona building to see interventions</p>
+                    </div>
+                `;
+                return;
+            }
+
+            displayMatchingProcess();
+            displayRecommendedGivets();
+            displayInterventionDelivery();
+            
+            systemState.learningScore = Math.min(100, systemState.learningScore + 15);
+            updateLearningScore();
+            saveSystemState();
+        }
+
+        function displayMatchingProcess() {
+            const primaryPersona = systemState.personas[0];
+            const container = document.getElementById('matchingProcess');
+            
+            container.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-pink-50 border-l-4 border-pink-500 p-4 rounded">
+                        <h4 class="font-semibold text-pink-800 mb-2">Primary Persona Detected</h4>
+                        <p class="text-pink-700">${primaryPersona.name} (${primaryPersona.match}% match)</p>
+                    </div>
+                    
+                    <div class="bg-pink-50 p-4 rounded">
+                        <h4 class="font-semibold mb-2">Matching Algorithm Steps:</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>User profile analysis complete</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Persona matching: ${primaryPersona.match}% confidence</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-spinner fa-spin text-blue-500 mr-2"></i>
+                                <span>Filtering intervention database...</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Personalized recommendations generated</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayRecommendedGivets() {
+            const primaryPersona = systemState.personas[0];
+            const givets = [
+                {
+                    title: 'Daily Goal Tracker',
+                    description: 'Track and visualize your daily progress',
+                    category: 'Productivity',
+                    effectiveness: '94%',
+                    duration: '5 mins/day',
+                    match: primaryPersona.name === 'The Achiever' ? 95 : 70
+                },
+                {
+                    title: 'Mindful Breathing',
+                    description: 'Guided breathing exercises for focus',
+                    category: 'Wellness',
+                    effectiveness: '89%',
+                    duration: '10 mins',
+                    match: primaryPersona.name === 'The Analyst' ? 90 : 75
+                },
+                {
+                    title: 'Learning Challenges',
+                    description: 'Bite-sized skill-building activities',
+                    category: 'Development',
+                    effectiveness: '91%',
+                    duration: '15 mins',
+                    match: primaryPersona.name === 'The Explorer' ? 92 : 80
+                },
+                {
+                    title: 'Social Accountability',
+                    description: 'Partner with others for mutual support',
+                    category: 'Social',
+                    effectiveness: '87%',
+                    duration: 'Variable',
+                    match: primaryPersona.name === 'The Collaborator' ? 95 : 65
+                }
+            ];
+
+            const sortedGivets = givets.sort((a, b) => b.match - a.match);
+            const container = document.getElementById('recommendedGivets');
+            
+            container.innerHTML = sortedGivets.map((givet, index) => `
+                <div class="givet-card bg-gradient-to-r ${index === 0 ? 'from-pink-400 to-red-500' : 'from-gray-300 to-gray-400'} text-white p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold">${givet.title}</h4>
+                        <div class="text-right">
+                            <div class="text-xs opacity-80">Match</div>
+                            <div class="font-bold">${givet.match}%</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90 mb-2">${givet.description}</p>
+                    <div class="flex justify-between text-xs">
+                        <span>${givet.category}</span>
+                        <span>${givet.duration}</span>
+                        <span>${givet.effectiveness} effective</span>
+                    </div>
+                    ${index === 0 ? '<div class="mt-2 text-xs bg-white bg-opacity-20 px-2 py-1 rounded">Recommended</div>' : ''}
+                </div>
+            `).join('');
+
+            systemState.interventions = sortedGivets;
+        }
+
+        function displayInterventionDelivery() {
+            const container = document.getElementById('interventionDelivery');
+            
+            container.innerHTML = `
+                <div class="bg-gradient-to-br from-purple-400 to-pink-400 text-white p-4 rounded-lg text-center">
+                    <i class="fas fa-mobile-alt text-3xl mb-2"></i>
+                    <h4 class="font-bold">Mobile Push</h4>
+                    <p class="text-sm opacity-90">Daily reminders</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-400 to-purple-400 text-white p-4 rounded-lg text-center">
+                    <i class="fas fa-envelope text-3xl mb-2"></i>
+                    <h4 class="font-bold">Email Digest</h4>
+                    <p class="text-sm opacity-90">Weekly summaries</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-400 to-blue-400 text-white p-4 rounded-lg text-center">
+                    <i class="fas fa-gamepad text-3xl mb-2"></i>
+                    <h4 class="font-bold">Gamified</h4>
+                    <p class="text-sm opacity-90">Points & badges</p>
+                </div>
+            `;
+        }
+
+        function initializeTracking() {
+            createEffectivenessChart();
+            createEngagementChart();
+            displayFeedbackForm();
+            
+            systemState.learningScore = Math.min(100, systemState.learningScore + 10);
+            updateLearningScore();
+        }
+
+        function createEffectivenessChart() {
+            const ctx = document.getElementById('effectivenessChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                    datasets: [{
+                        label: 'Intervention Effectiveness',
+                        data: [65, 72, 78, 85, 89, 92],
+                        borderColor: 'rgba(248, 113, 113, 1)',
+                        backgroundColor: 'rgba(248, 113, 113, 0.1)',
+                        borderWidth: 3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function createEngagementChart() {
+            const ctx = document.getElementById('engagementChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'Partially Completed', 'Skipped'],
+                    datasets: [{
+                        data: [75, 15, 10],
+                        backgroundColor: [
+                            'rgba(34, 197, 94, 0.8)',
+                            'rgba(251, 191, 36, 0.8)',
+                            'rgba(239, 68, 68, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function displayFeedbackForm() {
+            const container = document.getElementById('feedbackForm');
+            
+            container.innerHTML = `
+                <h4 class="font-semibold mb-4">Rate Your Recent Interventions</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">How effective was the Daily Goal Tracker?</label>
+                        <div class="flex space-x-2">
+                            ${[1,2,3,4,5].map(i => `
+                                <button class="rating-btn w-8 h-8 rounded-full border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-100" data-rating="${i}">
+                                    ${i}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">What would improve your experience?</label>
+                        <textarea class="w-full p-2 border rounded-lg" rows="3" placeholder="Your feedback helps us improve..."></textarea>
+                    </div>
+                    
+                    <button class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600" onclick="submitFeedback()">
+                        Submit Feedback
+                    </button>
+                </div>
+            `;
+
+            // Add rating functionality
+            document.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const rating = this.dataset.rating;
+                    const parent = this.parentElement;
+                    parent.querySelectorAll('.rating-btn').forEach((b, i) => {
+                        if (i < rating) {
+                            b.classList.add('bg-yellow-400', 'border-yellow-400');
+                            b.classList.remove('border-gray-300');
+                        } else {
+                            b.classList.remove('bg-yellow-400', 'border-yellow-400');
+                            b.classList.add('border-gray-300');
+                        }
+                    });
+                });
+            });
+        }
+
+        function submitFeedback() {
+            systemState.learningScore = Math.min(100, systemState.learningScore + 5);
+            updateLearningScore();
+            
+            // Show success message
+            const container = document.getElementById('feedbackForm');
+            container.innerHTML = `
+                <div class="text-center p-6 bg-green-50 rounded-lg">
+                    <i class="fas fa-check-circle text-green-500 text-4xl mb-2"></i>
+                    <h4 class="text-green-800 font-semibold">Feedback Submitted!</h4>
+                    <p class="text-green-600 text-sm">Your input helps improve our recommendations</p>
+                </div>
+            `;
+            
+            saveSystemState();
+        }
+
+        function initializeAnalytics() {
+            updateAnalyticsMetrics();
+            createLearningLoopChart();
+            displayPredictiveInsights();
+            displaySystemImprovements();
+        }
+
+        function updateAnalyticsMetrics() {
+            const learningRate = Math.min(100, systemState.learningScore + Math.random() * 10);
+            const successRate = Math.min(100, 85 + Math.random() * 10);
+            
+            document.getElementById('systemLearningRate').textContent = `${Math.round(learningRate)}%`;
+            document.getElementById('interventionSuccess').textContent = `${Math.round(successRate)}%`;
+        }
+
+        function createLearningLoopChart() {
+            const ctx = document.getElementById('learningLoopChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'User Understanding vs Intervention Success',
+                        data: [
+                            {x: 20, y: 45},
+                            {x: 35, y: 62},
+                            {x: 50, y: 71},
+                            {x: 65, y: 83},
+                            {x: 80, y: 91},
+                            {x: 95, y: 97}
+                        ],
+                        backgroundColor: 'rgba(34, 197, 94, 0.6)',
+                        borderColor: 'rgba(34, 197, 94, 1)',
+                        pointRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'User Understanding (%)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Intervention Success (%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function displayPredictiveInsights() {
+            const insights = [
+                { insight: 'User likely to prefer morning interventions', confidence: 87 },
+                { insight: 'Visual learning content shows 23% higher engagement', confidence: 92 },
+                { insight: 'Goal-tracking interventions expected to have 95% success rate', confidence: 79 },
+                { insight: 'Social features may increase retention by 34%', confidence: 68 }
+            ];
+
+            const container = document.getElementById('predictiveInsights');
+            container.innerHTML = insights.map(item => `
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-blue-800">${item.insight}</p>
+                        <span class="text-xs text-blue-600 font-semibold">${item.confidence}%</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displaySystemImprovements() {
+            const improvements = [
+                { improvement: 'Added persona refinement algorithm', impact: '+12% accuracy' },
+                { improvement: 'Enhanced matching for visual learners', impact: '+8% engagement' },
+                { improvement: 'Optimized feedback collection timing', impact: '+15% response rate' },
+                { improvement: 'Improved intervention personalization', impact: '+9% effectiveness' }
+            ];
+
+            const container = document.getElementById('systemImprovements');
+            container.innerHTML = improvements.map(item => `
+                <div class="bg-green-50 border-l-4 border-green-500 p-3 rounded">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-green-800">${item.improvement}</p>
+                        <span class="text-xs text-green-600 font-semibold">${item.impact}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateLearningScore() {
+            document.getElementById('learningScore').textContent = Math.round(systemState.learningScore);
+        }
+
+        function saveSystemState() {
+            localStorage.setItem('adaptiveLearningState', JSON.stringify(systemState));
+        }
+
+        function resetSystem() {
+            if (confirm('Are you sure you want to reset all data? This action cannot be undone.')) {
+                localStorage.removeItem('adaptiveLearningState');
+                systemState = {
+                    currentQuestionIndex: 0,
+                    userResponses: {},
+                    personas: [],
+                    interventions: [],
+                    learningScore: 0,
+                    feedbackData: {}
+                };
+                updateLearningScore();
+                switchTab('initial-questions');
+                displayCurrentQuestion();
+            }
+        }
+    </script>
+
+
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDmGhNlZL9nEGoh5yM90RqC05gd5Ueze8udfG4p5fd2u2M%2FOrcRQhkTpJIs8PuUHVhEVmoa5PBd%2F1fHhYPXZJDMVG96viVcQoueydUvVD8UJpAACF7SA1ucgDIpNKXVeo%2F86L%2BfQi%2Bya7Zv6JpdWiwk7eNsthNY%2Bmr2atq7cT81rtqTkd1mn9SFW3sKK7DsqSdzKBt7OZacdYOawTIP4CIGpHAcK0MhfyS9u2KE1jacUI0W5uinC7XxGaFqkOvCL77gf4VgEW1ZuDAGyIvY9BIYtFtqB38NELd5oqNCMRng5%2BK86MHk3oodrUK4Upih1k07iFNpnyCgM7hgKWQaBTFaBM9xkbLKtNrsCujyoJ4xWdo68r2PMx9qw4g32SKleFOkC3b%2FJuTR4NWJ6%2FWe6v1rhgm4eTo2BnCZcR6uzI7Dq6vys93wEFEaVktP8%2BIt229N6QwDG4Hbu2NXdMYRxmYUOYUChUkKjlTk0qRgTy1CpzxAMn9sDUVSERDecFfUXhuXvSFLwEx2D%2BebiWurx9l6A%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDmGhNlZL9nEGoh5yM90RqC05gd5Ueze8udfG4p5fd2u2M/OrcRQhkTpJIs8PuUHVhEVmoa5PBd/1fHhYPXZJDMVG96viVcQoueydUvVD8UJpAACF7SA1ucgDIpNKXVeo/86L+fQi+ya7Zv6JpdWiwk7eNsthNY+mr2atq7cT81rtqTkd1mn9SFW3sKK7DsqSdzKBt7OZacdYOawTIP4CIGpHAcK0MhfyS9u2KE1jacUI0W5uinC7XxGaFqkOvCL77gf4VgEW1ZuDAGyIvY9BIYtFtqB38NELd5oqNCMRng5+K86MHk3oodrUK4Upih1k07iFNpnyCgM7hgKWQaBTFaBM9xkbLKtNrsCujyoJ4xWdo68r2PMx9qw4g32SKleFOkC3b/JuTR4NWJ6/We6v1rhgm4eTo2BnCZcR6uzI7Dq6vys93wEFEaVktP8+It229N6QwDG4Hbu2NXdMYRxmYUOYUChUkKjlTk0qRgTy1CpzxAMn9sDUVSERDecFfUXhuXvSFLwEx2D+ebiWurx9l6A=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="./Adaptive Learning System - Ontology Givets Loop_files/notice_dialog.js"></script>
+    </body></html>
