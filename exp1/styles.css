@@ -160,10 +160,46 @@ h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
+.library-header {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.library-header:hover {
+    background: #f0f0f0;
+}
+
+.library-header h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #555;
+}
+
+#libraryToggle {
+    transition: transform 0.3s ease;
+    font-size: 0.8em;
+    color: #667eea;
+}
+
+#libraryToggle.expanded {
+    transform: rotate(90deg);
+}
+
+.library-count {
+    font-size: 0.8em;
+    color: #999;
+    font-weight: normal;
+}
+
 .library-info {
     color: #888;
     font-size: 0.9rem;
-    margin-bottom: 20px;
+    margin: 5px 0 0 0;
 }
 
 .selected-inspiration {

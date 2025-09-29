@@ -72,6 +72,10 @@ async function findMatch() {
     const persona = personas[selectedPersona];
     const allInspirations = [...inspirations.quotes, ...inspirations.songs];
 
+    // Add evidence-based interventions (but won't show in library display)
+    const interventions = getEvidenceBasedInterventions();
+    const allContent = [...allInspirations, ...interventions];
+
     // Show loading state and thinking section
     document.getElementById('matchBtn').disabled = true;
     document.getElementById('matchBtn').textContent = 'Finding Perfect Match...';
@@ -86,10 +90,10 @@ async function findMatch() {
     try {
         // Use real LLM if API key is set, otherwise fall back to simulation
         const match = OPENROUTER_API_KEY !== 'YOUR_OPENROUTER_API_KEY_HERE'
-            ? await realLLMMatching(persona, selectedState, allInspirations, updateThinking)
-            : await simulateLLMMatching(persona, selectedState, allInspirations, updateThinking);
+            ? await realLLMMatching(persona, selectedState, allContent, updateThinking)
+            : await simulateLLMMatching(persona, selectedState, allContent, updateThinking);
 
-        displayResults(match, allInspirations);
+        displayResults(match, allInspirations); // Only show quotes/songs in library display
     } catch (error) {
         console.error('Error in matching:', error);
         document.getElementById('reasoningContent').innerHTML = `<em>Error: ${error.message}</em>`;
@@ -365,32 +369,79 @@ function generateReasoning(persona, state, inspiration) {
 }
 
 function displayResults(match, allInspirations) {
-    // Display selected inspiration - show both quote and song if song is selected
+    // Display selected inspiration - ALWAYS show all three types that match the state
     const selectedDiv = document.getElementById('selectedInspiration');
 
-    if (match.selected.type === 'quote') {
-        selectedDiv.innerHTML = `"${match.selected.text}"<br><small>— ${match.selected.author}</small>`;
-    } else {
-        // For songs, show a complementary quote first, then the song
-        const complementaryQuote = findComplementaryQuote(match.selected, allInspirations);
+    // Get all interventions for comprehensive matching
+    const allContent = [...allInspirations, ...getEvidenceBasedInterventions()];
 
-        if (complementaryQuote) {
-            selectedDiv.innerHTML = `
-                <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-left: 4px solid #667eea; border-radius: 5px;">
-                    <em>"${complementaryQuote.text}"</em><br>
-                    <small>— ${complementaryQuote.author}</small>
+    // Find the best match of each type for the current state
+    const bestQuote = findBestMatchingQuote(selectedState, allContent);
+    const bestSong = findBestMatchingSong(selectedState, allContent);
+    const bestIntervention = findBestMatchingIntervention(selectedState, allContent);
+
+    let content = '';
+
+    // Always show quote if available
+    if (bestQuote) {
+        const isSelected = match.selected.id === bestQuote.id;
+        content += `
+            <div style="margin-bottom: 20px; padding: 15px; background: ${isSelected ? '#e3f2fd' : '#f8f9fa'}; border-left: 4px solid #667eea; border-radius: 5px; ${isSelected ? 'box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);' : ''}">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                    <strong style="color: #667eea;">📖 Inspirational Quote</strong>
+                    ${isSelected ? '<span style="margin-left: auto; background: #667eea; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8em;">AI SELECTED</span>' : ''}
                 </div>
-                <div>
-                    🎵 ${match.selected.text}
-                </div>
-            `;
-        } else {
-            selectedDiv.innerHTML = `🎵 ${match.selected.text}`;
-        }
+                <em>"${bestQuote.text}"</em><br>
+                <small>— ${bestQuote.author}</small>
+            </div>
+        `;
     }
 
+    // Always show song if available
+    if (bestSong) {
+        const isSelected = match.selected.id === bestSong.id;
+        content += `
+            <div style="margin-bottom: 20px; padding: 15px; background: ${isSelected ? '#fff3e0' : '#fff8e1'}; border-left: 4px solid #ff9800; border-radius: 5px; ${isSelected ? 'box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);' : ''}">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                    <strong style="color: #ef6c00;">🎵 Music Inspiration</strong>
+                    ${isSelected ? '<span style="margin-left: auto; background: #ff9800; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8em;">AI SELECTED</span>' : ''}
+                </div>
+                ${bestSong.text}
+            </div>
+        `;
+    }
+
+    // Always show intervention if available
+    if (bestIntervention) {
+        const isSelected = match.selected.id === bestIntervention.id;
+        content += `
+            <div style="padding: 20px; background: ${isSelected ? '#e8f8e8' : 'linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%)'}; border: 2px solid #4caf50; border-radius: 10px; ${isSelected ? 'box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);' : ''}">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <span style="font-size: 1.5em; margin-right: 10px;">🧠</span>
+                    <strong style="color: #2e7d32; font-size: 1.1em;">${bestIntervention.intervention}</strong>
+                    <span style="margin-left: auto; background: #4caf50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8em;">${bestIntervention.source}</span>
+                    ${isSelected ? '<span style="margin-left: 8px; background: #2e7d32; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8em;">AI SELECTED</span>' : ''}
+                </div>
+                <div style="color: #555; line-height: 1.6; margin-bottom: 15px;">
+                    ${bestIntervention.text}
+                </div>
+                <div style="display: flex; gap: 15px; font-size: 0.9em; color: #666;">
+                    <span>⏱️ ${bestIntervention.timeRequirement}</span>
+                    <span>⚡ ${bestIntervention.energyRequirement} energy</span>
+                    <span>📊 ${bestIntervention.evidenceBase}</span>
+                </div>
+            </div>
+        `;
+    }
+
+    if (content === '') {
+        content = '<em>No matching inspirations found for this state.</em>';
+    }
+
+    selectedDiv.innerHTML = content;
+
     document.getElementById('inspirationType').textContent =
-        match.selected.type.toUpperCase() + ' • Match Score: ' + match.selected.score;
+        'PERSONALIZED INSPIRATION SUITE • AI Score: ' + match.selected.score;
 
     // Display reasoning
     const reasoningDiv = document.getElementById('reasoningContent');
@@ -487,13 +538,113 @@ function createInspirationElement(inspiration) {
     return div;
 }
 
-function findComplementaryQuote(selectedSong, allInspirations) {
-    // Find a quote that matches the same emotional state as the selected song
+// Library toggle functionality
+function toggleLibrary() {
+    const grid = document.getElementById('inspirationGrid');
+    const toggle = document.getElementById('libraryToggle');
+
+    if (grid.style.display === 'none') {
+        grid.style.display = 'grid';
+        toggle.textContent = '▼';
+        toggle.classList.add('expanded');
+    } else {
+        grid.style.display = 'none';
+        toggle.textContent = '▶';
+        toggle.classList.remove('expanded');
+    }
+}
+
+// Evidence-based interventions data
+function getEvidenceBasedInterventions() {
+    return [
+        {
+            id: 'i1',
+            intervention: "3-Minute Breathing Space",
+            source: "MBSR",
+            type: "intervention",
+            text: "Take a 3-minute breathing space: Notice what's here right now, focus on your breath, then expand awareness to your whole body",
+            targetStates: ["overwhelmed", "anxious", "stressed"],
+            traits: ["mindfulness", "balance", "self-care", "audio", "kinesthetic"],
+            effect: "reduce stress, recenter attention",
+            timeRequirement: "3 min",
+            energyRequirement: "very_low",
+            evidenceBase: "RCTs on MBSR (Kabat-Zinn, 1990+)"
+        },
+        {
+            id: 'i2',
+            intervention: "Cognitive Reframe",
+            source: "CBT",
+            type: "intervention",
+            text: "Ask yourself: What's another way to look at this situation? What would you tell a friend facing this?",
+            targetStates: ["overwhelmed", "anxious", "disempowered"],
+            traits: ["achievement", "balance", "reflection"],
+            effect: "shift perspective, increase cognitive flexibility",
+            timeRequirement: "5 min",
+            energyRequirement: "low",
+            evidenceBase: "High (CBT RCTs)"
+        },
+        {
+            id: 'i3',
+            intervention: "Leaves on a Stream",
+            source: "ACT",
+            type: "intervention",
+            text: "Imagine your thoughts as leaves floating down a stream. Notice them, let them pass by without getting caught up in them",
+            targetStates: ["anxious", "overwhelmed", "sad"],
+            traits: ["calm", "balance", "audio", "visualization"],
+            effect: "reduce entanglement with thoughts, increase mindfulness",
+            timeRequirement: "5-10 min",
+            energyRequirement: "low",
+            evidenceBase: "ACT evidence base"
+        },
+        {
+            id: 'i4',
+            intervention: "Best Possible Self",
+            source: "Positive Psychology",
+            type: "intervention",
+            text: "Write about your life going as well as it possibly could. Be specific about your relationships, career, and personal growth",
+            targetStates: ["disempowered", "sad", "inspired"],
+            traits: ["growth", "hope", "creativity", "writing", "visualization"],
+            effect: "boost optimism, increase future orientation",
+            timeRequirement: "15-20 min",
+            energyRequirement: "high",
+            evidenceBase: "Multiple RCTs"
+        },
+        {
+            id: 'i5',
+            intervention: "Scaling Questions",
+            source: "Motivational Interviewing",
+            type: "intervention",
+            text: "On a scale of 1-10, how confident are you that you can handle this? What would move you up just one number?",
+            targetStates: ["disempowered", "overwhelmed"],
+            traits: ["growth", "agency", "reflection"],
+            effect: "enhance self-efficacy, increase readiness to act",
+            timeRequirement: "2-5 min",
+            energyRequirement: "very_low",
+            evidenceBase: "Strong MI evidence"
+        },
+        {
+            id: 'i6',
+            intervention: "Gratitude Letter",
+            source: "Positive Psychology",
+            type: "intervention",
+            text: "Write a letter to someone who has helped you but you've never properly thanked. Be specific about what they did and how it affected you",
+            targetStates: ["sad", "lonely", "happy"],
+            traits: ["connection", "kindness", "writing"],
+            effect: "increase positive affect, deepen social connection",
+            timeRequirement: "15 min",
+            energyRequirement: "medium",
+            evidenceBase: "Robust RCT evidence"
+        }
+    ];
+}
+
+function findComplementaryQuote(selectedItem, allInspirations) {
+    // Find a quote that matches the same emotional state as the selected item
     const quotes = allInspirations.filter(i => i.type === 'quote');
 
     // Look for quotes that share the same target states
     const matchingQuotes = quotes.filter(quote =>
-        quote.targetStates.some(state => selectedSong.targetStates.includes(state))
+        quote.targetStates.some(state => selectedItem.targetStates.includes(state))
     );
 
     if (matchingQuotes.length > 0) {
@@ -503,4 +654,41 @@ function findComplementaryQuote(selectedSong, allInspirations) {
 
     // Fallback to any quote if no perfect match
     return quotes.length > 0 ? quotes[0] : null;
+}
+
+function findComplementarySong(selectedItem, allInspirations) {
+    // Find a song that matches the same emotional state as the selected item
+    const songs = allInspirations.filter(i => i.type === 'song');
+
+    // Look for songs that share the same target states
+    const matchingSongs = songs.filter(song =>
+        song.targetStates.some(state => selectedItem.targetStates.includes(state))
+    );
+
+    if (matchingSongs.length > 0) {
+        // Return the first matching song
+        return matchingSongs[0];
+    }
+
+    // Fallback to any song if no perfect match
+    return songs.length > 0 ? songs[0] : null;
+}
+
+// Helper functions to find best match of each type for a given state
+function findBestMatchingQuote(state, allContent) {
+    const quotes = allContent.filter(i => i.type === 'quote');
+    const matching = quotes.filter(q => q.targetStates.includes(state));
+    return matching.length > 0 ? matching[0] : quotes[0] || null;
+}
+
+function findBestMatchingSong(state, allContent) {
+    const songs = allContent.filter(i => i.type === 'song');
+    const matching = songs.filter(s => s.targetStates.includes(state));
+    return matching.length > 0 ? matching[0] : songs[0] || null;
+}
+
+function findBestMatchingIntervention(state, allContent) {
+    const interventions = allContent.filter(i => i.type === 'intervention');
+    const matching = interventions.filter(i => i.targetStates.includes(state));
+    return matching.length > 0 ? matching[0] : interventions[0] || null;
 }

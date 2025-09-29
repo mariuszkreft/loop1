@@ -269,3 +269,19 @@ function createInspirationElement(inspiration) {
 
     return div;
 }
+
+// Library toggle functionality
+function toggleLibrary() {
+    const grid = document.getElementById('inspirationGrid');
+    const toggle = document.getElementById('libraryToggle');
+
+    if (grid.style.display === 'none') {
+        grid.style.display = 'grid';
+        toggle.textContent = '▼';
+        toggle.classList.add('expanded');
+    } else {
+        grid.style.display = 'none';
+        toggle.textContent = '▶';
+        toggle.classList.remove('expanded');
+    }
+}

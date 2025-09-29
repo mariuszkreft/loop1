@@ -42,9 +42,14 @@
 
         <div class="results-section" id="resultsSection" style="display: none;">
             <div class="all-inspirations">
-                <h3>Inspiration Library</h3>
-                <p class="library-info">All available inspirations • Yellow = matches current state • Purple = AI selected best match</p>
-                <div class="inspiration-grid" id="inspirationGrid"></div>
+                <div class="library-header" onclick="toggleLibrary()">
+                    <h3>
+                        <span id="libraryToggle">▶</span> Inspiration Library
+                        <span class="library-count">(24 items)</span>
+                    </h3>
+                    <p class="library-info">Click to expand • Yellow = matches current state • Purple = AI selected best match</p>
+                </div>
+                <div class="inspiration-grid" id="inspirationGrid" style="display: none;"></div>
             </div>
 
             <div class="selected-inspiration">
