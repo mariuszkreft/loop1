@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Inspirations Loading</h1>
+    <button onclick="checkData()">Check Data</button>
+    <button onclick="loadNow()">Force Load</button>
+    <pre id="output"></pre>
+
+    <script>
+        // Copy the loading code directly
+        let inspirations = { quotes: [], songs: [] };
+
+        async function loadInspirations() {
+            try {
+                console.log('Starting to load inspirations...');
+                const response = await fetch('./extended_inspirations.json');
+                console.log('Fetch response:', response.status);
+                const data = await response.json();
+                console.log('Parsed data:', data);
+                inspirations = data.inspirations;
+                console.log('Loaded inspirations:', inspirations.quotes.length + ' quotes, ' + inspirations.songs.length + ' songs');
+                document.getElementById('output').textContent += '\nLoaded: ' + inspirations.quotes.length + ' quotes, ' + inspirations.songs.length + ' songs';
+                return inspirations;
+            } catch (error) {
+                console.error('Error loading inspirations:', error);
+                document.getElementById('output').textContent += '\nError: ' + error.message;
+                inspirations = { quotes: [], songs: [] };
+                return inspirations;
+            }
+        }
+
+        function checkData() {
+            const output = document.getElementById('output');
+            output.textContent = 'Current state:\n';
+            output.textContent += 'Quotes: ' + inspirations.quotes.length + '\n';
+            output.textContent += 'Songs: ' + inspirations.songs.length + '\n';
+            if (inspirations.quotes.length > 0) {
+                output.textContent += '\nFirst quote: ' + inspirations.quotes[0].text;
+            }
+            console.log('Current inspirations:', inspirations);
+        }
+
+        async function loadNow() {
+            document.getElementById('output').textContent = 'Loading...\n';
+            await loadInspirations();
+            checkData();
+        }
+
+        // Try loading immediately
+        window.onload = async () => {
+            await loadInspirations();
+            checkData();
+        };
+    </script>
+</body>
+</html>

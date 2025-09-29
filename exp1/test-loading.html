@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Loading</title>
+</head>
+<body>
+    <h1>Testing Inspirations Loading</h1>
+    <div id="status">Loading...</div>
+    <div id="count"></div>
+    <div id="samples"></div>
+
+    <script src="inspirations.js"></script>
+    <script>
+        async function testLoading() {
+            const statusDiv = document.getElementById('status');
+            const countDiv = document.getElementById('count');
+            const samplesDiv = document.getElementById('samples');
+
+            // Wait for inspirations to load
+            await loadInspirations();
+
+            statusDiv.textContent = 'Loaded!';
+            countDiv.textContent = `Quotes: ${inspirations.quotes.length}, Songs: ${inspirations.songs.length}`;
+
+            // Show first quote and song as samples
+            if (inspirations.quotes.length > 0) {
+                samplesDiv.innerHTML += `<p>First quote: "${inspirations.quotes[0].text}" - ${inspirations.quotes[0].author}</p>`;
+            }
+            if (inspirations.songs.length > 0) {
+                samplesDiv.innerHTML += `<p>First song: ${inspirations.songs[0].title} by ${inspirations.songs[0].artist}</p>`;
+                samplesDiv.innerHTML += `<p>YouTube URL: ${inspirations.songs[0].youtube}</p>`;
+            }
+        }
+
+        testLoading();
+    </script>
+</body>
+</html>

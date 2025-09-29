@@ -13,6 +13,9 @@ const MODEL = 'openai/gpt-4o-mini'; // Cheaper, usually available
 
 // Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, starting initialization...');
+    console.log('Inspirations loaded:', inspirations.quotes.length, 'quotes,', inspirations.songs.length, 'songs');
+
     updatePersonaDisplay();
     displayAllInspirations(); // Show all inspirations on load
 
@@ -479,9 +482,9 @@ function generateReasoning(persona, state, inspiration) {
         primary: `Selected for ${persona.name} who is feeling ${state}`,
         points: [
             `State Match: This inspiration specifically targets the "${state}" emotional state`,
-            `Personal Fit: ${inspiration.reasons ? inspiration.reasons[0] : 'Aligns with personal traits'}`,
+            `Personal Fit: ${inspiration.reasons && inspiration.reasons.length > 0 ? inspiration.reasons[0] : 'Aligns with personal traits'}`,
             `Expected Impact: Will provide ${inspiration.effect} effect`,
-            `Delivery Format: ${inspiration.type === 'quote' ? 'Quick read perfect for fragmented time' : 'Audio experience for multi-sensory engagement'}`
+            `Delivery Format: ${inspiration.type === 'quote' ? 'Quick read perfect for fragmented time' : inspiration.type === 'song' ? 'Audio experience for multi-sensory engagement' : 'Evidence-based intervention'}`
         ]
     };
 
@@ -490,6 +493,34 @@ function generateReasoning(persona, state, inspiration) {
     }
 
     return reasoning;
+}
+
+// Function to extract YouTube video ID from URL
+function getYouTubeVideoId(url) {
+    if (!url) return null;
+    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[7].length === 11) ? match[7] : null;
+}
+
+// Function to create YouTube embed HTML
+function createYouTubeEmbed(videoId, title = '') {
+    if (!videoId) return '';
+    return `
+        <div style="margin-top: 10px;">
+            <iframe
+                width="320"
+                height="180"
+                src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1"
+                title="${title}"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                style="border-radius: 8px;">
+            </iframe>
+        </div>
+    `;
 }
 
 function displayResults(match, allInspirations) {
@@ -521,16 +552,19 @@ function displayResults(match, allInspirations) {
         `;
     }
 
-    // Always show song if available
+    // Always show song if available with YouTube embed
     if (bestSong) {
         const isSelected = match.selected.id === bestSong.id;
+        const videoId = getYouTubeVideoId(bestSong.youtube);
+
         content += `
             <div style="margin-bottom: 20px; padding: 15px; background: ${isSelected ? '#fff3e0' : '#fff8e1'}; border-left: 4px solid #ff9800; border-radius: 5px; ${isSelected ? 'box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);' : ''}">
                 <div style="display: flex; align-items: center; margin-bottom: 8px;">
                     <strong style="color: #ef6c00;">🎵 Music Inspiration</strong>
                     ${isSelected ? '<span style="margin-left: auto; background: #ff9800; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8em;">AI SELECTED</span>' : ''}
                 </div>
-                ${bestSong.text}
+                <div style="margin-bottom: 10px;">${bestSong.text}</div>
+                ${videoId ? createYouTubeEmbed(videoId, `${bestSong.title} by ${bestSong.artist}`) : ''}
             </div>
         `;
     }
@@ -590,6 +624,13 @@ function displayResults(match, allInspirations) {
 function displayAllInspirations() {
     const allInspirations = [...inspirations.quotes, ...inspirations.songs];
     const gridDiv = document.getElementById('inspirationGrid');
+    const libraryCount = document.getElementById('libraryCount');
+
+    // Update the library count
+    if (libraryCount) {
+        libraryCount.textContent = `(${allInspirations.length} items)`;
+    }
+
     document.getElementById('resultsSection').style.display = 'block';
     gridDiv.innerHTML = '';
 

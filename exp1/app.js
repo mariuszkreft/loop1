@@ -147,7 +147,7 @@ function generateReasoning(persona, state, inspiration) {
         primary: `Selected for ${persona.name} who is feeling ${state}`,
         points: [
             `State Match: This inspiration specifically targets the "${state}" emotional state`,
-            `Personal Fit: ${inspiration.reasons ? inspiration.reasons[0] : 'Aligns with personal traits'}`,
+            `Personal Fit: ${inspiration.reasons && inspiration.reasons.length > 0 ? inspiration.reasons[0] : 'Aligns with personal traits'}`,
             `Expected Impact: Will provide ${inspiration.effect} effect`,
             `Delivery Format: ${inspiration.type === 'quote' ? 'Quick read perfect for fragmented time' : 'Audio experience for multi-sensory engagement'}`
         ]
@@ -166,7 +166,28 @@ function displayResults(match, allInspirations) {
     if (match.selected.type === 'quote') {
         selectedDiv.innerHTML = `"${match.selected.text}"<br><small>— ${match.selected.author}</small>`;
     } else {
-        selectedDiv.innerHTML = `🎵 ${match.selected.text}`;
+        // For songs, show YouTube embed
+        const videoId = extractYouTubeVideoId(match.selected.youtube);
+        selectedDiv.innerHTML = `
+            <div class="song-display">
+                <p class="song-info">🎵 <strong>${match.selected.title}</strong> by ${match.selected.artist}</p>
+                <div class="youtube-embed" style="max-width: 560px; margin: 15px auto;">
+                    <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1"
+                        title="${match.selected.title} by ${match.selected.artist}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9em;">
+                    <a href="${match.selected.youtube}" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+                </p>
+            </div>
+        `;
     }
 
     document.getElementById('inspirationType').textContent =
@@ -268,6 +289,12 @@ function createInspirationElement(inspiration) {
     `;
 
     return div;
+}
+
+// Helper function to extract YouTube video ID from URL
+function extractYouTubeVideoId(url) {
+    const match = url.match(/[?&]v=([^&]+)/);
+    return match ? match[1] : url.split('/').pop();
 }
 
 // Library toggle functionality

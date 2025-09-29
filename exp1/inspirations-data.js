@@ -1,0 +1,378 @@
+const inspirations = {
+  quotes: [
+    {
+      id: "q1",
+      text: "Simplicity is the ultimate sophistication.",
+      author: "Leonardo da Vinci",
+      type: "quote",
+      targetStates: ["overwhelmed", "busy"],
+      traits: ["visual", "creative", "minimalist"],
+      effect: "calming, clarifying"
+    },
+    {
+      id: "q2",
+      text: "The master has failed more times than the beginner has even tried.",
+      author: "Stephen McCranie",
+      type: "quote",
+      targetStates: ["overwhelmed", "disempowered"],
+      traits: ["growth-oriented", "resilient"],
+      effect: "perspective, encouragement"
+    },
+    {
+      id: "q3",
+      text: "Action is the foundational key to all success.",
+      author: "Pablo Picasso",
+      type: "quote",
+      targetStates: ["overwhelmed", "stuck"],
+      traits: ["action-oriented", "achievement"],
+      effect: "motivating, directional"
+    },
+    {
+      id: "q4",
+      text: "You must learn to let go. Release the stress. You were never in control anyway.",
+      author: "Steve Maraboli",
+      type: "quote",
+      targetStates: ["anxious", "stressed"],
+      traits: ["acceptance", "spiritual"],
+      effect: "releasing, surrendering"
+    },
+    {
+      id: "q5",
+      text: "Worrying is like a rocking chair, it gives you something to do but never gets you anywhere.",
+      author: "Erma Bombeck",
+      type: "quote",
+      targetStates: ["anxious", "worried"],
+      traits: ["humor", "practical"],
+      effect: "perspective, lightening"
+    },
+    {
+      id: "q6",
+      text: "If you want to conquer the anxiety of life, live in the moment, live in the breath.",
+      author: "Amit Ray",
+      type: "quote",
+      targetStates: ["anxious", "stressed"],
+      traits: ["mindfulness", "breath-work"],
+      effect: "grounding, centering"
+    },
+    {
+      id: "q7",
+      text: "The wound is the place where the Light enters you.",
+      author: "Rumi",
+      type: "quote",
+      targetStates: ["sad", "heartbroken"],
+      traits: ["spiritual", "poetic", "depth"],
+      effect: "transformative, hopeful"
+    },
+    {
+      id: "q8",
+      text: "What a wonderful thought it is that some of the best days of our lives haven't happened yet.",
+      author: "Anne Frank",
+      type: "quote",
+      targetStates: ["sad", "hopeless"],
+      traits: ["optimistic", "future-focused"],
+      effect: "uplifting, perspective"
+    },
+    {
+      id: "q9",
+      text: "Knowing how to be solitary is central to the art of loving. When we can be alone, we can be with others without using them as a means of escape.",
+      author: "Bell Hooks",
+      type: "quote",
+      targetStates: ["lonely", "isolated"],
+      traits: ["introspective", "growth", "relationship-focused"],
+      effect: "empowering, reframing"
+    },
+    {
+      id: "q10",
+      text: "I restore myself when I'm alone.",
+      author: "Marilyn Monroe",
+      type: "quote",
+      targetStates: ["lonely", "depleted"],
+      traits: ["self-care", "introverted"],
+      effect: "validating, restorative"
+    },
+    {
+      id: "q11",
+      text: "The only way to do great work is to love what you do.",
+      author: "Steve Jobs",
+      type: "quote",
+      targetStates: ["happy", "inspired"],
+      traits: ["achievement", "passion", "career-focused"],
+      effect: "amplifying, directional"
+    },
+    {
+      id: "q12",
+      text: "Happiness is not something ready made. It comes from your own actions.",
+      author: "Dalai Lama",
+      type: "quote",
+      targetStates: ["happy", "empowered"],
+      traits: ["action-oriented", "wisdom", "spiritual"],
+      effect: "empowering, sustaining"
+    },
+    {
+      id: "q13",
+      text: "The future belongs to those who believe in the beauty of their dreams.",
+      author: "Eleanor Roosevelt",
+      type: "quote",
+      targetStates: ["inspired", "hopeful"],
+      traits: ["visionary", "creative", "ambitious"],
+      effect: "expansive, encouraging"
+    },
+    {
+      id: "q14",
+      text: "The best revenge is massive success.",
+      author: "Frank Sinatra",
+      type: "quote",
+      targetStates: ["disempowered", "angry"],
+      traits: ["competitive", "achievement"],
+      effect: "channeling, motivating"
+    },
+    {
+      id: "q15",
+      text: "Believe you can and you're halfway there.",
+      author: "Theodore Roosevelt",
+      type: "quote",
+      targetStates: ["disempowered", "doubtful"],
+      traits: ["self-efficacy", "action"],
+      effect: "confidence-building"
+    },
+    {
+      id: "q16",
+      text: "Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.",
+      author: "Thomas Edison",
+      type: "quote",
+      targetStates: ["disempowered", "defeated"],
+      traits: ["perseverance", "resilient"],
+      effect: "encouraging, persistent"
+    },
+    {
+      id: "q17",
+      text: "The greatest weapon against stress is our ability to choose one thought over another.",
+      author: "William James",
+      type: "quote",
+      targetStates: ["overwhelmed", "stressed"],
+      traits: ["empowering", "grounding", "practical"],
+      effect: "agency-building, calming"
+    },
+    {
+      id: "q18",
+      text: "Our anxiety does not come from thinking about the future, but from wanting to control it.",
+      author: "Kahlil Gibran",
+      type: "quote",
+      targetStates: ["anxious", "worried"],
+      traits: ["calming", "insightful", "perspective-shifting"],
+      effect: "release, acceptance"
+    },
+    {
+      id: "q19",
+      text: "The deeper that sorrow carves into your being, the more joy you can contain.",
+      author: "Kahlil Gibran",
+      type: "quote",
+      targetStates: ["sad", "grieving"],
+      traits: ["comforting", "hopeful", "transformative"],
+      effect: "reframing, hope-building"
+    },
+    {
+      id: "q20",
+      text: "Music was my refuge. I could crawl into the space between the notes and curl my back to loneliness.",
+      author: "Maya Angelou",
+      type: "quote",
+      targetStates: ["lonely", "isolated"],
+      traits: ["poetic", "relatable", "soothing"],
+      effect: "connecting, comforting"
+    },
+    {
+      id: "q21",
+      text: "Happiness is when what you think, what you say, and what you do are in harmony.",
+      author: "Mahatma Gandhi",
+      type: "quote",
+      targetStates: ["happy", "content"],
+      traits: ["uplifting", "wisdom-based", "authentic"],
+      effect: "sustaining, aligning"
+    },
+    {
+      id: "q22",
+      text: "If you can't fly then run, if you can't run then walk, if you can't walk then crawl, but whatever you do you have to keep moving forward.",
+      author: "Martin Luther King Jr.",
+      type: "quote",
+      targetStates: ["inspired", "motivated"],
+      traits: ["motivating", "persistent", "adaptable"],
+      effect: "encouraging, progressive"
+    },
+    {
+      id: "q23",
+      text: "You gain strength, courage, and confidence by every experience in which you really stop to look fear in the face.",
+      author: "Eleanor Roosevelt",
+      type: "quote",
+      targetStates: ["disempowered", "fearful"],
+      traits: ["empowering", "courage-building", "actionable"],
+      effect: "strengthening, confidence-building"
+    }
+  ],
+  songs: [
+    {
+      id: "s1",
+      text: "Listen to 'Breathe Me' by Sia - A song about vulnerability and asking for help",
+      title: "Breathe Me",
+      artist: "Sia",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=wHyTSwyZ330",
+      targetStates: ["overwhelmed", "anxious", "sad"],
+      traits: ["emotional", "vulnerable", "introspective"],
+      effect: "cathartic, connecting"
+    },
+    {
+      id: "s2",
+      text: "Play 'Three Little Birds' by Bob Marley - Everything's gonna be alright",
+      title: "Three Little Birds",
+      artist: "Bob Marley",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=HNBCVM4KbUM",
+      targetStates: ["anxious", "worried", "stressed"],
+      traits: ["optimistic", "simple", "comforting"],
+      effect: "soothing, reassuring"
+    },
+    {
+      id: "s3",
+      text: "Listen to 'Unwritten' by Natasha Bedingfield - Today is where your book begins",
+      title: "Unwritten",
+      artist: "Natasha Bedingfield",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=8mVEGfvQEEM",
+      targetStates: ["stuck", "uninspired", "disempowered"],
+      traits: ["empowering", "future-focused", "energetic"],
+      effect: "motivating, liberating"
+    },
+    {
+      id: "s4",
+      text: "Play 'Brave' by Sara Bareilles - Say what you wanna say and let the words fall out",
+      title: "Brave",
+      artist: "Sara Bareilles",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=QUQsqBqxoR4",
+      targetStates: ["anxious", "disempowered", "fearful"],
+      traits: ["courageous", "authentic", "action-oriented"],
+      effect: "empowering, courage-building"
+    },
+    {
+      id: "s5",
+      text: "Listen to 'The Middle' by Jimmy Eat World - It just takes some time",
+      title: "The Middle",
+      artist: "Jimmy Eat World",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=oKsxPW6i3pM",
+      targetStates: ["overwhelmed", "stressed", "impatient"],
+      traits: ["patient", "encouraging", "perspective"],
+      effect: "calming, reassuring"
+    },
+    {
+      id: "s6",
+      text: "Play 'Stronger' by Kelly Clarkson - What doesn't kill you makes you stronger",
+      title: "Stronger",
+      artist: "Kelly Clarkson",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=Xn676-fLq7I",
+      targetStates: ["sad", "defeated", "disempowered"],
+      traits: ["resilient", "empowering", "energetic"],
+      effect: "uplifting, strengthening"
+    },
+    {
+      id: "s7",
+      text: "Listen to 'Good Life' by OneRepublic - Celebrate the moment you're in",
+      title: "Good Life",
+      artist: "OneRepublic",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=jZhQOvvV45w",
+      targetStates: ["happy", "grateful", "inspired"],
+      traits: ["appreciative", "present-focused", "celebratory"],
+      effect: "amplifying joy, gratitude"
+    },
+    {
+      id: "s8",
+      text: "Play 'Rise Up' by Andra Day - I'll rise up, in spite of the ache",
+      title: "Rise Up",
+      artist: "Andra Day",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=qoIyPJ-bkaw",
+      targetStates: ["sad", "defeated", "tired"],
+      traits: ["perseverant", "soulful", "inspiring"],
+      effect: "strengthening, hope-building"
+    },
+    {
+      id: "s9",
+      text: "Listen to 'Weightless' by Marconi Union - Scientifically designed to reduce anxiety by 65%",
+      title: "Weightless",
+      artist: "Marconi Union",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=qYnA9wWFHLI",
+      targetStates: ["overwhelmed", "stressed"],
+      traits: ["scientifically-proven", "ambient", "calming"],
+      effect: "physiological calming, stress reduction"
+    },
+    {
+      id: "s10",
+      text: "Play 'River' by Yiruma - Gentle piano melody that mirrors natural breathing patterns",
+      title: "River",
+      artist: "Yiruma",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=7maJOI3QMu0",
+      targetStates: ["anxious", "restless"],
+      traits: ["gentle", "flowing", "meditative"],
+      effect: "breathing regulation, emotional balance"
+    },
+    {
+      id: "s11",
+      text: "Listen to 'Fight Song' by Rachel Platten - Empowering anthem about taking back control",
+      title: "Fight Song",
+      artist: "Rachel Platten",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=xo1VInw-SKc",
+      targetStates: ["sad", "defeated"],
+      traits: ["empowering", "building", "anthemic"],
+      effect: "motivating, determination-building"
+    },
+    {
+      id: "s12",
+      text: "Play 'You Are Not Alone' by Michael Jackson - Direct message of connection and companionship",
+      title: "You Are Not Alone",
+      artist: "Michael Jackson",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=pAyKJAtDNCw",
+      targetStates: ["lonely", "isolated"],
+      traits: ["comforting", "reassuring", "connecting"],
+      effect: "reducing isolation, companionship"
+    },
+    {
+      id: "s13",
+      text: "Listen to 'Happy' by Pharrell Williams - Infectious celebration of joy and positivity",
+      title: "Happy",
+      artist: "Pharrell Williams",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=ZbZSe6N_BXs",
+      targetStates: ["happy", "celebratory"],
+      traits: ["infectious", "participatory", "joyful"],
+      effect: "mood elevation, celebration"
+    },
+    {
+      id: "s14",
+      text: "Play 'Roar' by Katy Perry - Motivational anthem about finding inner strength",
+      title: "Roar",
+      artist: "Katy Perry",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=CevxZvSJLk8",
+      targetStates: ["inspired", "seeking motivation"],
+      traits: ["powerful", "triumphant", "motivating"],
+      effect: "empowerment, courage activation"
+    },
+    {
+      id: "s15",
+      text: "Listen to 'Titanium' by David Guetta ft. Sia - Powerful declaration of unbreakable inner strength",
+      title: "Titanium",
+      artist: "David Guetta ft. Sia",
+      type: "song",
+      youtube: "https://www.youtube.com/watch?v=JRfuAukYTKg",
+      targetStates: ["disempowered", "defeated"],
+      traits: ["empowering", "resilient", "powerful"],
+      effect: "strength transformation, invincibility"
+    }
+  ]
+};

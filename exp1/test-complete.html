@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Complete Loading</title>
+</head>
+<body>
+    <h1>Complete Test</h1>
+    <button onclick="testLoad()">Test Load</button>
+    <button onclick="showData()">Show Current Data</button>
+    <div id="output"></div>
+
+    <!-- Same script order as main app -->
+    <script src="personas.js"></script>
+    <script src="inspirations.js"></script>
+    <script>
+        async function testLoad() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<h3>Testing...</h3>';
+
+            try {
+                output.innerHTML += '<p>Calling loadInspirations()...</p>';
+                await loadInspirations();
+                output.innerHTML += '<p style="color:green">✓ Load completed</p>';
+                output.innerHTML += '<p>Quotes loaded: ' + inspirations.quotes.length + '</p>';
+                output.innerHTML += '<p>Songs loaded: ' + inspirations.songs.length + '</p>';
+
+                if (inspirations.quotes.length > 0) {
+                    output.innerHTML += '<p>Sample quote: "' + inspirations.quotes[0].text + '"</p>';
+                }
+                if (inspirations.songs.length > 0) {
+                    output.innerHTML += '<p>Sample song: ' + inspirations.songs[0].title + '</p>';
+                    if (inspirations.songs[0].youtube) {
+                        output.innerHTML += '<p>Has YouTube URL: Yes</p>';
+                    }
+                }
+            } catch (error) {
+                output.innerHTML += '<p style="color:red">✗ Error: ' + error.message + '</p>';
+            }
+        }
+
+        function showData() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<h3>Current Data State:</h3>';
+            output.innerHTML += '<pre>' + JSON.stringify({
+                quotesCount: inspirations.quotes.length,
+                songsCount: inspirations.songs.length,
+                firstQuote: inspirations.quotes[0] ? inspirations.quotes[0].text : 'none',
+                firstSong: inspirations.songs[0] ? inspirations.songs[0].title : 'none'
+            }, null, 2) + '</pre>';
+        }
+
+        // Auto-load on page load
+        window.addEventListener('DOMContentLoaded', async () => {
+            console.log('Test page loaded, auto-loading inspirations...');
+            await testLoad();
+        });
+    </script>
+</body>
+</html>
