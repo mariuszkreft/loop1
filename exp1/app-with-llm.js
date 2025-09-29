@@ -217,8 +217,32 @@ Return ONLY the JSON object, no additional text.`;
 
     if (!response.ok) {
         const errorData = await response.json();
-        updateThinking('\n\n❌ API Error: ' + (errorData.error?.message || 'Unknown error'));
-        throw new Error(`OpenRouter API error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
+        console.error('Full error response:', errorData);
+
+        // More detailed error handling
+        let errorMsg = 'Unknown error';
+        if (errorData.error?.message) {
+            errorMsg = errorData.error.message;
+        } else if (errorData.message) {
+            errorMsg = errorData.message;
+        }
+
+        updateThinking(`\n\n❌ API Error: ${errorMsg}`);
+
+        if (errorMsg.includes('User not found') || errorMsg.includes('credit') || errorMsg.includes('balance')) {
+            updateThinking('\n💡 API key issue detected - switching to simulation mode');
+            updateThinking('\n🔄 Retrying with local simulation...\n');
+
+            // Automatically fall back to simulation
+            return await simulateLLMMatching(persona, state, allInspirations, updateThinking);
+        } else if (errorMsg.includes('model')) {
+            updateThinking('\n💡 Model unavailable - falling back to simulation mode');
+            updateThinking('\n🔄 Retrying with local simulation...\n');
+            return await simulateLLMMatching(persona, state, allInspirations, updateThinking);
+        }
+
+        // For other errors, still throw
+        throw new Error(`OpenRouter API error: ${response.status} - ${errorMsg}`);
     }
 
     updateThinking('\n✅ Response received from AI');
@@ -236,8 +260,11 @@ Return ONLY the JSON object, no additional text.`;
         if (selected.type === 'quote') {
             updateThinking('\n   "' + selected.text + '"');
             updateThinking('\n   — ' + selected.author);
-        } else {
+        } else if (selected.type === 'song') {
             updateThinking('\n   🎵 ' + selected.title + ' by ' + selected.artist);
+        } else if (selected.type === 'intervention') {
+            updateThinking('\n   🧠 ' + selected.intervention + ' (' + selected.source + ')');
+            updateThinking('\n   "' + selected.text.substring(0, 80) + '..."');
         }
     } else {
         updateThinking('\n\n⚠️ Warning: Selected ID not found, using fallback');
@@ -332,8 +359,11 @@ async function simulateLLMMatching(persona, state, allInspirations, updateThinki
     if (selected.type === 'quote') {
         updateThinking('\n   "' + selected.text + '"');
         updateThinking('\n   — ' + selected.author);
-    } else {
+    } else if (selected.type === 'song') {
         updateThinking('\n   🎵 ' + selected.title + ' by ' + selected.artist);
+    } else if (selected.type === 'intervention') {
+        updateThinking('\n   🧠 ' + selected.intervention + ' (' + selected.source + ')');
+        updateThinking('\n   "' + selected.text.substring(0, 80) + '..."');
     }
 
     if (selected.reasons && selected.reasons.length > 0) {

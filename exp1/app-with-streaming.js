@@ -3,11 +3,11 @@ let selectedPersona = 'elara';
 let selectedState = null;
 
 // Configuration - ADD YOUR API KEY HERE
-const OPENROUTER_API_KEY = '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'; // Replace with your OpenRouter API key
+const OPENROUTER_API_KEY = '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'; 
 const API_BASE_URL = 'https://openrouter.ai/api/v1/chat/completions';
 // Try different models if one fails
-const MODEL = 'moonshotai/kimi-k2-0905'; // May not be available
-//const MODEL = 'openai/gpt-3.5-turbo'; // Cheaper, usually available
+//const MODEL = 'moonshotai/kimi-k2-0905'; // May not be available
+const MODEL = 'openai/gpt-4o-mini'; // Cheaper, usually available
 //const MODEL = 'google/gemini-flash-1.5'; // Fast and cheap
 // const MODEL = 'anthropic/claude-3-haiku'; // Good alternative
 
@@ -253,6 +253,8 @@ Return ONLY the JSON object.`;
     if (!response.ok) {
         const errorData = await response.json();
         console.error('Full error response:', errorData);
+        console.error('Response status:', response.status);
+        console.error('Response headers:', Object.fromEntries(response.headers.entries()));
 
         // More detailed error handling
         let errorMsg = 'Unknown error';
@@ -262,16 +264,88 @@ Return ONLY the JSON object.`;
             errorMsg = errorData.message;
         }
 
-        // Show helpful error messages
-        await typewriterEffect(`\n\n❌ API Error: ${errorMsg}\n`);
+        // Show detailed debugging info
+        await typewriterEffect(`\n\n❌ API Error (${response.status}): ${errorMsg}\n`);
+        await typewriterEffect(`🔍 Debug info:\n`);
+        await typewriterEffect(`   → Model: ${MODEL}\n`);
+        await typewriterEffect(`   → API Key: ${OPENROUTER_API_KEY.substring(0, 12)}...\n`);
+        await typewriterEffect(`   → Status: ${response.status}\n`);
 
-        if (errorMsg.includes('credit') || errorMsg.includes('balance')) {
-            await typewriterEffect('💡 Tip: Check your OpenRouter credit balance\n');
-        } else if (errorMsg.includes('model')) {
-            await typewriterEffect('💡 Tip: Try a different model (edit MODEL in app-with-streaming.js)\n');
+        // Try with fallback to different model first
+        if (errorMsg.includes('User not found')) {
+            await typewriterEffect('💡 Trying with fallback model: openai/gpt-3.5-turbo\n');
+
+            // Try once more with a different model
+            const fallbackResponse = await fetch(API_BASE_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                    'HTTP-Referer': window.location.origin,
+                    'X-Title': 'Give.T Demo'
+                },
+                body: JSON.stringify({
+                    model: 'openai/gpt-3.5-turbo', // More reliable fallback
+                    messages: [
+                        { role: 'system', content: 'You are a personalization engine. Return only valid JSON.' },
+                        { role: 'user', content: prompt }
+                    ],
+                    temperature: 0.3,
+                    max_tokens: 500
+                })
+            });
+
+            if (fallbackResponse.ok) {
+                await typewriterEffect('✅ Fallback model worked!\n\n');
+                const fallbackData = await fallbackResponse.json();
+                const llmResponse = JSON.parse(fallbackData.choices[0].message.content);
+
+                // Continue with normal processing
+                await typewriterEffect('━━━ MATCH FOUND ━━━\n');
+                await typewriterEffect('🎯 Selected: ');
+                await typewriterEffect(llmResponse.selected_id, true);
+                // ... rest of normal response processing
+
+                const selected = allInspirations.find(i => i.id === llmResponse.selected_id);
+                if (selected) {
+                    await typewriterEffect('\n📝 Content:\n');
+                    if (selected.type === 'quote') {
+                        await typewriterEffect('   "' + selected.text + '"\n');
+                        await typewriterEffect('   — ' + selected.author + '\n');
+                    } else if (selected.type === 'song') {
+                        await typewriterEffect('   🎵 ' + selected.title + ' by ' + selected.artist + '\n');
+                    } else if (selected.type === 'intervention') {
+                        await typewriterEffect('   🧠 ' + selected.intervention + ' (' + selected.source + ')\n');
+                        await typewriterEffect('   "' + selected.text.substring(0, 80) + '..."\n');
+                    }
+                }
+
+                await typewriterEffect('\n💡 Impact: ');
+                await typewriterEffect(llmResponse.expected_impact, true);
+                await typewriterEffect('\n\n✨ Match complete!\n');
+
+                selected.score = 100;
+                return {
+                    selected,
+                    reasoning: llmResponse.reasoning,
+                    allScored: allInspirations.map(i => ({
+                        ...i,
+                        score: i.id === selected.id ? 100 : (i.targetStates.includes(state) ? 50 : 0)
+                    }))
+                };
+            } else {
+                await typewriterEffect('❌ Fallback also failed - switching to simulation\n');
+            }
         }
 
-        throw new Error(`API error: ${errorMsg}`);
+        if (errorMsg.includes('credit') || errorMsg.includes('balance')) {
+            await typewriterEffect('💡 This looks like a credit/billing issue\n');
+        } else if (errorMsg.includes('model')) {
+            await typewriterEffect('💡 Model unavailable\n');
+        }
+
+        await typewriterEffect('🔄 Falling back to simulation mode...\n\n');
+        return await simulateLLMStreamingMatch(persona, state, allInspirations);
     }
 
     const data = await response.json();
@@ -291,8 +365,11 @@ Return ONLY the JSON object.`;
         if (selected.type === 'quote') {
             await typewriterEffect('   "' + selected.text + '"\n');
             await typewriterEffect('   — ' + selected.author + '\n');
-        } else {
+        } else if (selected.type === 'song') {
             await typewriterEffect('   🎵 ' + selected.title + ' by ' + selected.artist + '\n');
+        } else if (selected.type === 'intervention') {
+            await typewriterEffect('   🧠 ' + selected.intervention + ' (' + selected.source + ')\n');
+            await typewriterEffect('   "' + selected.text.substring(0, 80) + '..."\n');
         }
     }
 
@@ -379,8 +456,11 @@ async function simulateLLMStreamingMatch(persona, state, allInspirations) {
     if (selected.type === 'quote') {
         await typewriterEffect('   "' + selected.text + '"\n');
         await typewriterEffect('   — ' + selected.author + '\n\n');
-    } else {
+    } else if (selected.type === 'song') {
         await typewriterEffect('   🎵 ' + selected.title + ' by ' + selected.artist + '\n\n');
+    } else if (selected.type === 'intervention') {
+        await typewriterEffect('   🧠 ' + selected.intervention + ' (' + selected.source + ')\n');
+        await typewriterEffect('   "' + selected.text.substring(0, 80) + '..."\n\n');
     }
 
     await typewriterEffect('✨ Selection complete!\n');
